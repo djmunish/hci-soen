@@ -21,46 +21,43 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Welcome to SmartGCC");
+        primaryStage.setTitle(Constants.TITLE_SCREEN);
         final ToggleGroup group = new ToggleGroup();
 
-        Label titleLabel = new Label("Please select your level of experience");
+        Label titleLabel = new Label(Constants.SELECT_USER_TYPE);
 //        titleLabel.setTextFill(Color.FLORALWHITE);
         titleLabel.setFont(new Font("Avenir", 20));
-        titleLabel.setTranslateX(60);
+        titleLabel.setTranslateX(100);
         titleLabel.setTranslateY(60);
         titleLabel.setPrefWidth(500);
         titleLabel.setTextAlignment(TextAlignment.CENTER);
 
-        RadioButton rb1 = new RadioButton("Novice");
-        rb1.setToggleGroup(group);
-        rb1.setPrefSize(150, 50);
-        rb1.setTranslateX(titleLabel.getTranslateX());
-        rb1.setTranslateY(titleLabel.getTranslateY() + 20);
+        RadioButton noviceOption = new RadioButton(Constants.NOVICE);
+        noviceOption.setToggleGroup(group);
+        noviceOption.setPrefSize(150, 50);
+        noviceOption.setTranslateX(60);
+        noviceOption.setTranslateY(titleLabel.getTranslateY() + 20);
 
-        RadioButton rb2 = new RadioButton("Typical");
-        rb2.setToggleGroup(group);
-        rb2.setPrefSize(150, 50);
-        rb2.setTranslateX(titleLabel.getTranslateX());
-        rb2.setTranslateY(rb1.getTranslateY() + 10);
+        RadioButton typicalOption = new RadioButton(Constants.TYPICAL);
+        typicalOption.setToggleGroup(group);
+        typicalOption.setPrefSize(150, 50);
+        typicalOption.setTranslateX(noviceOption.getTranslateX());
+        typicalOption.setTranslateY(noviceOption.getTranslateY() + 10);
 
-        RadioButton rb3 = new RadioButton("Expert");
-        rb3.setToggleGroup(group);
-        rb3.setPrefSize(150, 50);
-        rb3.setTranslateX(titleLabel.getTranslateX());
-        rb3.setTranslateY(rb2.getTranslateY() + 10);
+        RadioButton expertOption = new RadioButton(Constants.EXPERT);
+        expertOption.setToggleGroup(group);
+        expertOption.setPrefSize(150, 50);
+        expertOption.setTranslateX(noviceOption.getTranslateX());
+        expertOption.setTranslateY(typicalOption.getTranslateY() + 10);
 
 
-        Button btnok = new Button("Get Started");
-        btnok.setTranslateX(100);
-        btnok.setTranslateY(rb3.getTranslateY() + 20);
-        btnok.setPrefSize(300, 50);
+        Button btnok = Constants.createButton(100, (int)(expertOption.getTranslateY() + 20), 300, 50, Constants.GET_STATED_BUTTON);
         btnok.setFont(new Font("Avenir-Bold", 20));
         VBox vbox = new VBox();
         vbox.setPrefWidth(500);
         Scene scene = new Scene(vbox, 500, 500);
 
-        vbox.getChildren().addAll(titleLabel, rb1, rb2, rb3, btnok);
+        vbox.getChildren().addAll(titleLabel, noviceOption, typicalOption, expertOption, btnok);
         vbox.setSpacing(10);
 
         vbox.setPrefWidth(500);
