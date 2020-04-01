@@ -119,7 +119,10 @@ public class Main extends Application {
 
 
     public void startCompiler(Stage primaryStage){
-        System.out.println("button clicked");
+        if (selectedUserType == null){
+            Constants.showAlert("Select user type");
+            return;
+        }
         CompilerController compilerObj = new CompilerController();
         compilerObj.user = selectedUserType;
 

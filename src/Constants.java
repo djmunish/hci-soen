@@ -29,7 +29,7 @@ public final class Constants {
     //Alerts
     public static final String SELECT_USER_TYPE = "Please select your level of experience";
     public static final String TITLE_SCREEN = "Welcome to SmartGCC";
-    public static final String GET_STATED_BUTTON = "GCC Compiler";
+    public static final String GET_STATED_BUTTON = "Get Started";
     public static final String TITLE_COMPILER = "GCC Compiler";
 
 
@@ -39,7 +39,7 @@ public final class Constants {
 
     public static void showAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("ALERT");
+        alert.setTitle("Alert");
         alert.setHeaderText(null);
         alert.setContentText(s);
         alert.showAndWait();
