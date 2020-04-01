@@ -1,18 +1,25 @@
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Optional;
 
 
 public class Main extends Application {
+    private Constants.userType selectedUserType;
 
     public static void main(String[] args) {
         launch(args);
@@ -25,7 +32,6 @@ public class Main extends Application {
         final ToggleGroup group = new ToggleGroup();
 
         Label titleLabel = new Label(Constants.SELECT_USER_TYPE);
-//        titleLabel.setTextFill(Color.FLORALWHITE);
         titleLabel.setFont(new Font("Avenir", 20));
         titleLabel.setTranslateX(100);
         titleLabel.setTranslateY(60);
@@ -50,14 +56,56 @@ public class Main extends Application {
         expertOption.setTranslateX(noviceOption.getTranslateX());
         expertOption.setTranslateY(typicalOption.getTranslateY() + 10);
 
+        ToggleGroup tg = new ToggleGroup();
 
-        Button btnok = Constants.createButton(100, (int)(expertOption.getTranslateY() + 20), 300, 50, Constants.GET_STATED_BUTTON);
-        btnok.setFont(new Font("Avenir-Bold", 20));
+
+
+        // add radiobuttons to toggle group
+        noviceOption.setToggleGroup(tg);
+        typicalOption.setToggleGroup(tg);
+        expertOption.setToggleGroup(tg);
+
+
+
+        tg.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
+        {
+            public void changed(ObservableValue<? extends Toggle> ob,
+                                Toggle o, Toggle n)
+            {
+
+                RadioButton rb = (RadioButton)tg.getSelectedToggle();
+
+                if (rb != null) {
+                    String s = rb.getText();
+
+                    selectedUserType = Constants.userType.valueOf(s.toUpperCase());
+
+                    System.out.println(selectedUserType);
+                }
+            }
+        });
+
+
+        Button startedBtn = Constants.createButton(100, (int)(expertOption.getTranslateY() + 20), 300, 50, Constants.GET_STATED_BUTTON);
+        startedBtn.setFont(new Font("Avenir-Bold", 20));
         VBox vbox = new VBox();
         vbox.setPrefWidth(500);
-        Scene scene = new Scene(vbox, 500, 500);
 
-        vbox.getChildren().addAll(titleLabel, noviceOption, typicalOption, expertOption, btnok);
+
+        startedBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                startCompiler(primaryStage);
+            }
+        });
+
+
+        vbox.getChildren().addAll(titleLabel, noviceOption, typicalOption, expertOption, startedBtn);
+
+
+
+        Scene scene = new Scene(vbox, 500, 500);
         vbox.setSpacing(10);
 
         vbox.setPrefWidth(500);
@@ -67,5 +115,19 @@ public class Main extends Application {
         primaryStage.setWidth(500);
         primaryStage.setHeight(500);
         primaryStage.show();
+    }
+
+
+    public void startCompiler(Stage primaryStage){
+        System.out.println("button clicked");
+        CompilerController compilerObj = new CompilerController();
+        compilerObj.user = selectedUserType;
+
+        try {
+            compilerObj.start(primaryStage);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
     }
 }

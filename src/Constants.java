@@ -15,6 +15,13 @@ import java.util.HashMap;
  */
 public final class Constants {
     //Titles
+
+    enum userType{
+         NOVICE,
+         EXPERT,
+         TYPICAL
+    }
+
     public static final String NOVICE = "Novice";
     public static final String EXPERT = "Expert";
     public static final String TYPICAL = "Typical";
@@ -22,7 +29,8 @@ public final class Constants {
     //Alerts
     public static final String SELECT_USER_TYPE = "Please select your level of experience";
     public static final String TITLE_SCREEN = "Welcome to SmartGCC";
-    public static final String GET_STATED_BUTTON = "Get Started";
+    public static final String GET_STATED_BUTTON = "GCC Compiler";
+    public static final String TITLE_COMPILER = "GCC Compiler";
 
 
 
