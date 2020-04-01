@@ -4,13 +4,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.scene.text.Font;
 
 import java.awt.*;
-import java.util.ArrayList;
+
 
 public class Main extends Application {
 
@@ -23,71 +23,52 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Welcome to SmartGCC");
         final ToggleGroup group = new ToggleGroup();
+
+        Label titleLabel = new Label("Please select your level of experience");
+//        titleLabel.setTextFill(Color.FLORALWHITE);
+        titleLabel.setFont(new Font("Avenir", 20));
+        titleLabel.setTranslateX(60);
+        titleLabel.setTranslateY(60);
+        titleLabel.setPrefWidth(500);
+        titleLabel.setTextAlignment(TextAlignment.CENTER);
+
         RadioButton rb1 = new RadioButton("Novice");
         rb1.setToggleGroup(group);
         rb1.setPrefSize(150, 50);
-        rb1.setTranslateX(60);
-        rb1.setTranslateY(190);
+        rb1.setTranslateX(titleLabel.getTranslateX());
+        rb1.setTranslateY(titleLabel.getTranslateY() + 20);
 
         RadioButton rb2 = new RadioButton("Typical");
         rb2.setToggleGroup(group);
         rb2.setPrefSize(150, 50);
-        rb2.setTranslateX(60);
-        rb2.setTranslateY(200);
+        rb2.setTranslateX(titleLabel.getTranslateX());
+        rb2.setTranslateY(rb1.getTranslateY() + 10);
 
         RadioButton rb3 = new RadioButton("Expert");
         rb3.setToggleGroup(group);
         rb3.setPrefSize(150, 50);
-        rb3.setTranslateX(60);
-        rb3.setTranslateY(210);
+        rb3.setTranslateX(titleLabel.getTranslateX());
+        rb3.setTranslateY(rb2.getTranslateY() + 10);
 
 
-        HBox hbox = new HBox();
-        VBox vbox = new VBox();
-
-        Scene scene = new Scene(hbox, 1000, 800);
-        vbox.getChildren().add(rb1);
-        vbox.getChildren().add(rb2);
-        vbox.getChildren().add(rb3);
-
-        vbox.setSpacing(10);
-
-        Button btnok = new Button("Get Stared");
-        btnok.setStyle("-fx-background-color: Green ");
-        btnok.setTranslateX(60);
-        btnok.setTranslateY(220);
+        Button btnok = new Button("Get Started");
+        btnok.setTranslateX(100);
+        btnok.setTranslateY(rb3.getTranslateY() + 20);
         btnok.setPrefSize(300, 50);
+        btnok.setFont(new Font("Avenir-Bold", 20));
+        VBox vbox = new VBox();
+        vbox.setPrefWidth(500);
+        Scene scene = new Scene(vbox, 500, 500);
 
-        // Navigation to Arena.
-
-
-        vbox.getChildren().add(btnok);
-
-
-        Label l2 = new Label("PLEASE SELECT THE USER TYPE " + "!");
-//        l2.setTextFill(Color.FLORALWHITE);
-//        l2.setFont(new Font("Arial", 20));
-
-
-        l2.setTranslateX(0);
-        l2.setTranslateY(50);
-        l2.setPrefWidth(500);
-        l2.setWrapText(true);
+        vbox.getChildren().addAll(titleLabel, rb1, rb2, rb3, btnok);
+        vbox.setSpacing(10);
 
         vbox.setPrefWidth(500);
 
-        hbox.getChildren().add(vbox);
-//        hbox.getChildren().add(btnok);
-        hbox.getChildren().add(l2);
-        hbox.setSpacing(50);
-
-
-        hbox.setStyle("-fx-background-color: Grey");
+        vbox.setStyle("-fx-background-color:POWDERBLUE");
         primaryStage.setScene(scene);
         primaryStage.setWidth(500);
         primaryStage.setHeight(500);
-
-        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 }
