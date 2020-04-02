@@ -35,8 +35,6 @@ public final class Constants {
 
 
 
-
-
     public static void showAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Alert");

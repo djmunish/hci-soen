@@ -12,11 +12,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
-import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Optional;
-
 
 public class Main extends Application {
     private Constants.userType selectedUserType;
@@ -77,9 +72,7 @@ public class Main extends Application {
 
                 if (rb != null) {
                     String s = rb.getText();
-
                     selectedUserType = Constants.userType.valueOf(s.toUpperCase());
-
                     System.out.println(selectedUserType);
                 }
             }
