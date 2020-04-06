@@ -15,7 +15,8 @@ import javafx.scene.text.Font;
 
 public class Main extends Application {
     private Constants.userType selectedUserType;
-
+    
+    Stage primary;
     public static void main(String[] args) {
         launch(args);
     }
@@ -23,7 +24,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle(Constants.TITLE_SCREEN);
+        primary = primaryStage;
+    	primaryStage.setTitle(Constants.TITLE_SCREEN);
         final ToggleGroup group = new ToggleGroup();
 
         Label titleLabel = new Label(Constants.SELECT_USER_TYPE);
@@ -116,11 +118,20 @@ public class Main extends Application {
             Constants.showAlert("Select user type");
             return;
         }
-        CompilerController compilerObj = new CompilerController();
-        compilerObj.user = selectedUserType;
+        
+        CodeEditorExample codeEditorObj = new CodeEditorExample();
+    	try {
+    		codeEditorObj.start(primary);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        // CompilerController compilerObj = new CompilerController();
+       // compilerObj.user = selectedUserType;
 
         try {
-            compilerObj.start(primaryStage);
+        	codeEditorObj.start(primaryStage);
         }
         catch (Exception e){
             System.out.println(e);
