@@ -40,6 +40,8 @@ public class CompilerController extends Application {
                 GccHelper.runCommand("./" + outputName);
             }
         });
+        
+        
 
 
         hbox.getChildren().addAll(startedBtn);

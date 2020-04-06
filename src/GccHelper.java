@@ -5,8 +5,8 @@ public class GccHelper { // Linker File
     public static void runCommand(String command) {
         try {
             Runtime rt = Runtime.getRuntime();
-            //Process pr = rt.exec("./test");
-//            Process pr = rt.exec("g++ test.cpp -o test");
+            //Process pr = rt.exec("./test"); //running
+//            Process pr = rt.exec("g++ test.cpp -o test");  //compiling
             Process pr = rt.exec(command);
 
             BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
