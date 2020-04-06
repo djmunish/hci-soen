@@ -10,12 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.codegen.CompilerConstants;
 import javafx.scene.text.Font;
 
 
 public class Main extends Application {
     private Constants.userType selectedUserType;
-    
+        
     Stage primary;
     public static void main(String[] args) {
         launch(args);
@@ -23,7 +24,7 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(final Stage primaryStage) throws Exception {
         primary = primaryStage;
     	primaryStage.setTitle(Constants.TITLE_SCREEN);
         final ToggleGroup group = new ToggleGroup();
@@ -53,29 +54,23 @@ public class Main extends Application {
         expertOption.setTranslateX(noviceOption.getTranslateX());
         expertOption.setTranslateY(typicalOption.getTranslateY() + 10);
 
-        ToggleGroup tg = new ToggleGroup();
-
-
-
+        final ToggleGroup tg = new ToggleGroup();
         // add radiobuttons to toggle group
         noviceOption.setToggleGroup(tg);
         typicalOption.setToggleGroup(tg);
         expertOption.setToggleGroup(tg);
 
-
-
         tg.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
         {
             public void changed(ObservableValue<? extends Toggle> ob,
-                                Toggle o, Toggle n)
-            {
+                                Toggle o, Toggle n){        
 
                 RadioButton rb = (RadioButton)tg.getSelectedToggle();
 
                 if (rb != null) {
                     String s = rb.getText();
                     selectedUserType = Constants.userType.valueOf(s.toUpperCase());
-                    System.out.println(selectedUserType);
+                    System.out.println(selectedUserType);                   
                 }
             }
         });
@@ -98,6 +93,8 @@ public class Main extends Application {
 
         vbox.getChildren().addAll(titleLabel, noviceOption, typicalOption, expertOption, startedBtn);
 
+
+
         Scene scene = new Scene(vbox, 500, 500);
         vbox.setSpacing(10);
 
@@ -112,17 +109,27 @@ public class Main extends Application {
 
 
     public void startCompiler(Stage primaryStage){
+    	CodeEditorController codeEditorObj = new CodeEditorController();
+        codeEditorObj.user = selectedUserType;
         if (selectedUserType == null){
-            Constants.showAlert(Constants.USER_SELECTION);
+            Constants.showAlert("Select user type");
             return;
-        }
+        }  
         
-        CodeEditorController codeEditorObj = new CodeEditorController();
     	try {
     		codeEditorObj.start(primary);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
+        // CompilerController compilerObj = new CompilerController();
+       // compilerObj.user = selectedUserType;
+        try {
+        	codeEditorObj.start(primaryStage);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
     }
 }

@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -19,9 +21,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class CodeEditorController extends Application {
-
+	
 	public void CodeEditorExample(String[] args) {};
-
+	Constants.userType user;
 	@Override 
 	public void start(Stage stage) throws Exception {
 		// create the editing controls.
@@ -75,13 +77,24 @@ public class CodeEditorController extends Application {
 		Image linkImg = new Image(getClass().getResourceAsStream("images/link.png"),20,20,true,true);
 		linking.setGraphic(new ImageView(linkImg));
 		toolBar.getItems().add(linking);
-
+        
+		if(user == Constants.userType.NOVICE) {
+			codeGenerate.setVisible(false);
+			optimize.setVisible(false);
+			developerOption.setVisible(false);
+		}
+		else if(user == Constants.userType.TYPICAL) {
+			developerOption.setVisible(false);
+		}
+		
+	
 		ComboBox allOptions = new ComboBox();
 		allOptions.setPromptText("All Options");
-		allOptions.getItems().add("Option 1");
+		allOptions.getItems().add("Option 1"); 
 		allOptions.getItems().add("Option 2");
-		allOptions.getItems().add("Option 3");
+		allOptions.getItems().add("Option 3"); 
 		toolBar.getItems().add(allOptions);
+		 
 
 
 		revertEdits.setOnAction(new EventHandler<ActionEvent>() {
