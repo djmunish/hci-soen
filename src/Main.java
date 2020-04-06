@@ -98,8 +98,6 @@ public class Main extends Application {
 
         vbox.getChildren().addAll(titleLabel, noviceOption, typicalOption, expertOption, startedBtn);
 
-
-
         Scene scene = new Scene(vbox, 500, 500);
         vbox.setSpacing(10);
 
@@ -115,26 +113,16 @@ public class Main extends Application {
 
     public void startCompiler(Stage primaryStage){
         if (selectedUserType == null){
-            Constants.showAlert("Select user type");
+            Constants.showAlert(Constants.USER_SELECTION);
             return;
         }
         
-        CodeEditorExample codeEditorObj = new CodeEditorExample();
+        CodeEditorController codeEditorObj = new CodeEditorController();
     	try {
     		codeEditorObj.start(primary);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-        // CompilerController compilerObj = new CompilerController();
-       // compilerObj.user = selectedUserType;
-
-        try {
-        	codeEditorObj.start(primaryStage);
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
     }
 }

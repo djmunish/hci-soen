@@ -27,11 +27,12 @@ public final class Constants {
     public static final String TYPICAL = "Typical";
 
     //Alerts
-    public static final String SELECT_USER_TYPE = "Please select your level of experience";
+    public static final String SELECT_USER_TYPE = "Command executed with errors!";
     public static final String TITLE_SCREEN = "Welcome to SmartGCC";
     public static final String GET_STATED_BUTTON = "Get Started";
     public static final String TITLE_COMPILER = "GCC Compiler";
-
+    public static final String COMMAND_ERROR = "Command executed with errors!";
+    public static final String USER_SELECTION = "Select user type";
 
 
 

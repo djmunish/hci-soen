@@ -1,9 +1,6 @@
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 
 import javafx.application.Application;
@@ -18,12 +15,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBoxBuilder;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.VBoxBuilder;
 import javafx.stage.Stage;
 
-public class CodeEditorExample extends Application {
+public class CodeEditorController extends Application {
 
 	public void CodeEditorExample(String[] args) {};
 
@@ -107,6 +102,10 @@ public class CodeEditorExample extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
+
+				if (editor.getText().length() == 0){
+					return;
+				}
 
 				PrintWriter fw = null;
 				try {

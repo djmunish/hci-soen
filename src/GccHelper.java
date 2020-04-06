@@ -18,7 +18,7 @@ public class GccHelper { // Linker File
             }
 
             int exitVal = pr.waitFor();
-            System.out.println("Exited with error code "+exitVal);
+            System.out.println("command executed, any errors? " + (exitVal == 0 ? "No" : "Yes"));
 
         } catch(Exception e) {
             System.out.println("exception"+e.toString());
