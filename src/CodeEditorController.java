@@ -36,8 +36,10 @@ public class CodeEditorController extends Application {
 		// create the editing controls.
 
 		Label title = new Label("CodeEditor");
-
 		title.setStyle("-fx-font-size: 20;");
+		Label outputTitle = new Label("Output");
+		outputTitle.setStyle("-fx-font-size: 20;");
+
 		final TextArea editor = new TextArea();
 		editor.setPrefHeight(400); 
 		editor.setPrefWidth(300); 
@@ -48,8 +50,8 @@ public class CodeEditorController extends Application {
 
 		//Toolbar Buttons
 		ToolBar toolBar = new ToolBar();
-toolBar.setLayoutX(900);
-toolBar.setLayoutY(700);
+		toolBar.setLayoutX(900);
+		toolBar.setLayoutY(700);
 
 		Button compile = new Button("Compile");
 		Image hammer = new Image(getClass().getResourceAsStream("images/hammer.png"),20,20,true,true);
@@ -119,6 +121,23 @@ toolBar.setLayoutY(700);
 				string = string.replaceAll("\\[","").replaceAll("\\]","");
 				System.out.println(string);
 				List<String> list = Arrays.asList(string.split("\\s*,\\s*"));
+				if(user==Constants.userType.NOVICE) {
+					if(!(list.contains("Code Generate"))) {
+						codeGenerate.setVisible(false);	
+					}
+
+					if(!(list.contains("Optimize"))) {
+						optimize.setVisible(false);	
+					}
+
+					if(!(list.contains("Developer Option"))) {
+						developerOption.setVisible(false);	
+					}
+				}else {
+					if(!(list.contains("Developer Option"))) {
+						developerOption.setVisible(false);	
+					}
+				}
 
 				for (String buttonSelected : list) {
 
@@ -137,7 +156,7 @@ toolBar.setLayoutY(700);
 
 			}
 		});
-		
+
 		toolBar.getItems().add(allOptions);
 		final Label allOptionLabel = new Label();
 		allOptionLabel.setText("All Options");
@@ -154,7 +173,7 @@ toolBar.setLayoutY(700);
 		VBox layout = new VBox(); 
 		layout.setSpacing(10); 
 		ObservableList list = layout.getChildren(); 
-		list.addAll(title, toolBar, editor,revertEdits,output);  
+		list.addAll(title, toolBar, editor,revertEdits,outputTitle,output);  
 		layout.setStyle("-fx-background-color: cornsilk; -fx-padding: 10;");
 
 		compile.setOnAction(new EventHandler<ActionEvent>() {
@@ -182,14 +201,14 @@ toolBar.setLayoutY(700);
 		});
 
 		execute.setOnAction(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent event) {
 				String result=gccHelper.runCommand("./" + "test");
 				output.setText(result);
-				
+
 			}
-			
+
 		});
 
 		// display the scene.
