@@ -156,11 +156,13 @@ public class CodeEditorController extends Application {
 
 			}
 		});
+		if(!(user == Constants.userType.EXPERT)) {
 
-		toolBar.getItems().add(allOptions);
-		final Label allOptionLabel = new Label();
-		allOptionLabel.setText("All Options");
-		toolBar.getItems().add(allOptionLabel);
+			toolBar.getItems().add(allOptions);
+			final Label allOptionLabel = new Label();
+			allOptionLabel.setText("All Options");
+			toolBar.getItems().add(allOptionLabel);
+		}
 
 		revertEdits.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -171,7 +173,7 @@ public class CodeEditorController extends Application {
 		});
 
 		VBox layout = new VBox(); 
-		layout.setSpacing(10); 
+		layout.setSpacing(10);
 		ObservableList list = layout.getChildren(); 
 		list.addAll(title, toolBar, editor,revertEdits,outputTitle,output);  
 		layout.setStyle("-fx-background-color: cornsilk; -fx-padding: 10;");
@@ -206,9 +208,20 @@ public class CodeEditorController extends Application {
 			public void handle(ActionEvent event) {
 				String result=gccHelper.runCommand("./" + "test");
 				output.setText(result);
-
 			}
+		});
 
+		switchUser.setOnAction(new EventHandler<ActionEvent>() {
+			Main main= new Main();
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					main.start(stage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		});
 
 		// display the scene.
