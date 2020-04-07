@@ -1,7 +1,12 @@
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,6 +52,11 @@ public class CodeEditorController extends Application {
 		output.setPrefHeight(200); 
 		output.setPrefWidth(300);
 		final Button revertEdits = new Button("Erase All");
+		
+		String content = new String ( Files.readAllBytes( Paths.get("test.cpp") ) );
+		if(!content.isEmpty()) {
+			editor.setText(content);
+		}
 
 		//Toolbar Buttons
 		ToolBar toolBar = new ToolBar();
@@ -186,8 +196,7 @@ public class CodeEditorController extends Application {
 				if (editor.getText().length() == 0){
 					return;
 				}
-
-				PrintWriter fw = null;
+				
 				try {
 					FileWriter fileWriter = new FileWriter("test.cpp");
 					fileWriter.write(editor.getText());
@@ -215,8 +224,13 @@ public class CodeEditorController extends Application {
 			Main main= new Main();
 			@Override
 			public void handle(ActionEvent event) {
+	
 				try {
+					FileWriter fileWriter = new FileWriter("test.cpp");
+					fileWriter.write(editor.getText());
+					fileWriter.close();
 					main.start(stage);
+				
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

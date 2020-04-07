@@ -12,7 +12,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
-
 public class Main extends Application {
     private Constants.userType selectedUserType;
         
@@ -20,7 +19,6 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
@@ -74,12 +72,10 @@ public class Main extends Application {
             }
         });
 
-
         Button startedBtn = Constants.createButton(100, (int)(expertOption.getTranslateY() + 20), 300, 50, Constants.GET_STATED_BUTTON);
         startedBtn.setFont(new Font("Avenir-Bold", 20));
         VBox vbox = new VBox();
         vbox.setPrefWidth(500);
-
 
         startedBtn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -89,10 +85,7 @@ public class Main extends Application {
             }
         });
 
-
         vbox.getChildren().addAll(titleLabel, noviceOption, typicalOption, expertOption, startedBtn);
-
-
 
         Scene scene = new Scene(vbox, 500, 500);
         vbox.setSpacing(10);
@@ -106,29 +99,18 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
     public void startCompiler(Stage primaryStage){
     	CodeEditorController codeEditorObj = new CodeEditorController();
         codeEditorObj.user = selectedUserType;
         if (selectedUserType == null){
             Constants.showAlert("Select user type");
             return;
-        }  
-        
+        }    
     	try {
     		codeEditorObj.start(primary);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-        // CompilerController compilerObj = new CompilerController();
-       // compilerObj.user = selectedUserType;
-        try {
-        	codeEditorObj.start(primaryStage);
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
     }
 }
