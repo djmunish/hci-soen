@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import jdk.nashorn.internal.codegen.CompilerConstants;
 import javafx.scene.text.Font;
 
 

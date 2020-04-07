@@ -82,10 +82,13 @@ public class CodeEditorController extends Application {
 			codeGenerate.setVisible(false);
 			optimize.setVisible(false);
 			developerOption.setVisible(false);
+			toolBar.getItems().removeAll(codeGenerate,developerOption,optimize);
 		}
 		else if(user == Constants.userType.TYPICAL) {
 			developerOption.setVisible(false);
+			toolBar.getItems().remove(developerOption);
 		}
+
 		
 	
 		ComboBox allOptions = new ComboBox();
