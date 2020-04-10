@@ -9,7 +9,7 @@ int main()
     sumOfTwoNumbers = 10+7;
 
     // Prints sum 
-    cout  << sumOfTwoNumbers;     
+    cout << firstNumber << " + " <<  secondNumber << " = " << sumOfTwoNumbers;     
 
     return 0;
 }
