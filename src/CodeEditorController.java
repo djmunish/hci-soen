@@ -113,9 +113,6 @@ public class CodeEditorController extends Application {
 		switchUser.setGraphic(new ImageView(sort));
 		toolBar.getItems().add(switchUser);
 
-		Button importFile = new Button("Import");
-		toolBar.getItems().add(importFile);	
-
 		Button linking = new Button("Linking");
 		Image linkImg = new Image(getClass().getResourceAsStream("images/link.png"),20,20,true,true);
 		linking.setGraphic(new ImageView(linkImg));
@@ -303,25 +300,7 @@ public class CodeEditorController extends Application {
 
 			});
 
-		importFile.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				FileChooser fileChooser = new FileChooser();
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CPP files (*.cpp)", "*.cpp");
-				fileChooser.getExtensionFilters().add(extFilter);
-				File file = fileChooser.showOpenDialog(stage);
-				String path=file.toString();
-				try {
-					String content = new String ( Files.readAllBytes( Paths.get(path) ) );
-					editor.setText(content);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-		});
 
 		open.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
