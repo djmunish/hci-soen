@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -7,10 +6,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.controlsfx.control.CheckComboBox;
 
@@ -37,23 +36,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-
-import java.util.AbstractMap.SimpleEntry;
-import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
-
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Glow;
-import javafx.scene.effect.SepiaTone;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+
 
 
 public class CodeEditorController extends Application {
@@ -129,7 +113,6 @@ public class CodeEditorController extends Application {
 		switchUser.setGraphic(new ImageView(sort));
 		toolBar.getItems().add(switchUser);
 
-
 		Button linking = new Button("Linking");
 		Image linkImg = new Image(getClass().getResourceAsStream("images/link.png"),20,20,true,true);
 		linking.setGraphic(new ImageView(linkImg));
@@ -144,6 +127,7 @@ public class CodeEditorController extends Application {
 		Image setting = new Image(getClass().getResourceAsStream("images/settings.png"),20,20,true,true);
 		optimize.setGraphic(new ImageView(setting));
 		toolBar.getItems().add(optimize);
+
 
 		String opt[] = {"Assembly File", "Executable File", "Binary File"};
 		ChoiceBox<String> developerOption = new ChoiceBox<>(FXCollections.observableArrayList(opt));
@@ -316,6 +300,8 @@ public class CodeEditorController extends Application {
 
 			});
 
+
+
 		open.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -351,9 +337,10 @@ public class CodeEditorController extends Application {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
+
 			}
 		});
-
 
 		debug.setOnAction(new EventHandler<ActionEvent>() {
 
