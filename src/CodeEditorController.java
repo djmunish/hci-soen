@@ -297,6 +297,24 @@ public class CodeEditorController extends Application {
 			}
 		});
 
+		optimize.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Runtime rt = Runtime.getRuntime();
+				try {
+					//-O1 -O2 -O3 -Ofast
+					Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
+					String optResult = GccHelper.runCommand("./optimizeCode");
+					output.setText("Optimized Result:"+optResult);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			});
+
 		importFile.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -335,6 +353,46 @@ public class CodeEditorController extends Application {
 			}
 		});
 
+		codeGenerate.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+
+				try {
+					Runtime rt = Runtime.getRuntime();
+					Process pr = rt.exec("g++ -S test.cpp -fverbose-asm -Os -o codegenerated");
+					output.setText("Code Generated");
+					File file = new File("codegenerated");
+					if(!file.createNewFile())
+						java.awt.Desktop.getDesktop().open(file);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+
+			}
+		});
+
+
+		debug.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub	
+				try {
+					Runtime rt = Runtime.getRuntime();
+					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
+					String debugResult = GccHelper.runCommand("./debug");
+					output.setText("Debug Result:"+debugResult);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
 
 		// add a listener 
 		developerOption.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
@@ -344,12 +402,13 @@ public class CodeEditorController extends Application {
 				// TODO Auto-generated method stub
 				Runtime rt = Runtime.getRuntime();
 				if(opt[new_value.intValue()].equals("Assembly File")){
-					
+
 					try {
 						Process pr = rt.exec("g++ -S test.cpp");
 						output.setText("Assembly File Generated");
 						File file = new File("test.s");
-						java.awt.Desktop.getDesktop().open(file);
+						if(!file.createNewFile())
+							java.awt.Desktop.getDesktop().open(file);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -363,8 +422,7 @@ public class CodeEditorController extends Application {
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
-					
+					}		
 				}
 				else if(opt[new_value.intValue()].equals("Binary File")){
 					try {
@@ -384,5 +442,5 @@ public class CodeEditorController extends Application {
 		stage.setHeight(700);
 		stage.setWidth(1200);
 		stage.show();
+		}
 	}
-}
