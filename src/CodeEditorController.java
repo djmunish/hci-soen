@@ -348,15 +348,13 @@ public class CodeEditorController extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub	
-				try {
-					Runtime rt = Runtime.getRuntime();
-					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
-					String debugResult = GccHelper.runCommand("./debug");
-					output.setText("Debug Result:"+debugResult);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				//					Runtime rt = Runtime.getRuntime();
+//					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
+
+				String debugResult1 = GccHelper.runCommand("g++ -D DEBUG test.cpp -o debug");
+				System.out.println(debugResult1);
+				String debugResult = GccHelper.runCommand("./debug");
+				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
 
 			}
 		});

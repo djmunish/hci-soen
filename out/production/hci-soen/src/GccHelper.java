@@ -3,7 +3,7 @@ import java.io.InputStreamReader;
 
 public class GccHelper { // Linker File
 	public static String runCommand(String command) {
-		String result = null;
+		String result = "";
 		String line=null;
 		try {
 			Runtime rt = Runtime.getRuntime();
@@ -14,14 +14,21 @@ public class GccHelper { // Linker File
 			BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 
 			while((line = input.readLine()) != null) {
-				result=line;
+				if(!isNullOrEmpty(line)){
+					result += line + "\n";
 				System.out.println("result="+line);
+
 			}
+			}
+			System.out.println("dsad="+result);
 
 			if(command.equals("g++ test.cpp -o test")) {
 				int exitVal = pr.waitFor();
 				System.out.println("command executed, any errors? " + (exitVal == 0 ? "No" : "Yes"));
 				result="command executed, any errors? " + (exitVal == 0 ? "No" : "Yes");
+				return result;
+			}
+			else if (command.equals("g++ -D DEBUG test.cpp -o debug")){
 				return result;
 			}
 			else {
@@ -32,5 +39,11 @@ public class GccHelper { // Linker File
 			return("exception"+e.toString());
 		}
 
+	}
+
+	public static boolean isNullOrEmpty(String str) {
+		if(str != null && !str.isEmpty())
+			return false;
+		return true;
 	}
 }
