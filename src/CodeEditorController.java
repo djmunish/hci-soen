@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +40,8 @@ import javafx.stage.Stage;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -370,8 +373,6 @@ public class CodeEditorController extends Application {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-
 			}
 		});
 
@@ -380,16 +381,13 @@ public class CodeEditorController extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub	
-				try {
-					Runtime rt = Runtime.getRuntime();
-					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
-					String debugResult = GccHelper.runCommand("./debug");
-					output.setText("Debug Result:"+debugResult);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				String debugResult1 = GccHelper.runCommand("g++ -D DEBUG test.cpp -o debug");
+				System.out.println("debugRes1"+debugResult1);
+				
+				String debugResult = GccHelper.runCommand("./debug");
+				
+				output.setText("Debug Result:"+debugResult);
+				//TimeUnit.SECONDS.sleep(2);
 
 			}
 		});
@@ -407,9 +405,10 @@ public class CodeEditorController extends Application {
 						Process pr = rt.exec("g++ -S test.cpp");
 						output.setText("Assembly File Generated");
 						File file = new File("test.s");
+						TimeUnit.SECONDS.sleep(2);
 						if(!file.createNewFile())
 							java.awt.Desktop.getDesktop().open(file);
-					} catch (IOException e) {
+					} catch (IOException | InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
