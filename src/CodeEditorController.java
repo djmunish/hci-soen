@@ -32,14 +32,52 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Map.Entry;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.SepiaTone;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+
 public class CodeEditorController extends Application {
+
+
 
 	public void CodeEditorExample(String[] args) {};
 	Constants.userType user;
-	GccHelper gccHelper= new GccHelper();
-	@Override 
+	@Override
 	public void start(Stage stage) throws Exception {
 		// create the editing controls.
+
+
+        MenuBar menuBar = new MenuBar();
+
+        // --- Menu File
+        Menu menuFile = new Menu("File");
+        MenuItem open = new MenuItem("Open");
+        menuFile.getItems().addAll(open);
+
+
+        // --- Menu Edit
+        Menu menuEdit = new Menu("Edit");
+        MenuItem copy = new MenuItem("Copy");
+        MenuItem cut = new MenuItem("Cut");
+        MenuItem paste = new MenuItem("Paste");
+        menuEdit.getItems().addAll(copy, cut, paste);
+
+        // --- Menu View
+
+        menuBar.getMenus().addAll(menuFile, menuEdit);
 
 		Label title = new Label("CodeEditor");
 		title.setStyle("-fx-font-size: 20;");
@@ -65,46 +103,46 @@ public class CodeEditorController extends Application {
 		toolBar.setLayoutY(700);
 
 		Button compile = new Button("Compile");
-		Image hammer = new Image(getClass().getResourceAsStream("images/hammer.png"),20,20,true,true);
-		compile.setGraphic(new ImageView(hammer));
+//		Image hammer = new Image(getClass().getResourceAsStream("images/hammer.png"),20,20,true,true);
+//		compile.setGraphic(new ImageView(hammer));
 		toolBar.getItems().add(compile);
 
 		Button execute = new Button("Execute");
-		Image play = new Image(getClass().getResourceAsStream("images/play-button.png"),20,20,true,true);
-		execute.setGraphic(new ImageView(play));
+//		Image play = new Image(getClass().getResourceAsStream("images/play-button.png"),20,20,true,true);
+//		execute.setGraphic(new ImageView(play));
 		toolBar.getItems().add(execute);
 
 		Button debug = new Button("Debug");
-		Image debugImg = new Image(getClass().getResourceAsStream("images/debug.png"),20,20,true,true);
-		debug.setGraphic(new ImageView(debugImg));
+//		Image debugImg = new Image(getClass().getResourceAsStream("images/debug.png"),20,20,true,true);
+//		debug.setGraphic(new ImageView(debugImg));
 		toolBar.getItems().add(debug);
 
 		Button switchUser = new Button("Switch User");
-		Image sort = new Image(getClass().getResourceAsStream("images/sort.png"),20,20,true,true);
-		switchUser.setGraphic(new ImageView(sort));
+//		Image sort = new Image(getClass().getResourceAsStream("images/sort.png"),20,20,true,true);
+//		switchUser.setGraphic(new ImageView(sort));
 		toolBar.getItems().add(switchUser);
 
 		Button importFile = new Button("Import");
 		toolBar.getItems().add(importFile);	
 		
 		Button linking = new Button("Linking");
-		Image linkImg = new Image(getClass().getResourceAsStream("images/link.png"),20,20,true,true);
-		linking.setGraphic(new ImageView(linkImg));
+//		Image linkImg = new Image(getClass().getResourceAsStream("images/link.png"),20,20,true,true);
+//		linking.setGraphic(new ImageView(linkImg));
 		toolBar.getItems().add(linking);
 
 		Button codeGenerate = new Button("Code Generate");
-		Image coding = new Image(getClass().getResourceAsStream("images/coding.png"),20,20,true,true);
-		codeGenerate.setGraphic(new ImageView(coding));
+//		Image coding = new Image(getClass().getResourceAsStream("images/coding.png"),20,20,true,true);
+//		codeGenerate.setGraphic(new ImageView(coding));
 		toolBar.getItems().add(codeGenerate);
 
 		Button optimize = new Button("Optimize");
-		Image setting = new Image(getClass().getResourceAsStream("images/settings.png"),20,20,true,true);
-		optimize.setGraphic(new ImageView(setting));
+//		Image setting = new Image(getClass().getResourceAsStream("images/settings.png"),20,20,true,true);
+//		optimize.setGraphic(new ImageView(setting));
 		toolBar.getItems().add(optimize);
 
 		Button developerOption = new Button("Developer Option");
-		Image cloudImg = new Image(getClass().getResourceAsStream("images/cloud-service.png"),20,20,true,true);
-		developerOption.setGraphic(new ImageView(cloudImg));
+//		Image cloudImg = new Image(getClass().getResourceAsStream("images/cloud-service.png"),20,20,true,true);
+//		developerOption.setGraphic(new ImageView(cloudImg));
 		toolBar.getItems().add(developerOption);
 
 		final ObservableList<String> options = FXCollections.observableArrayList();
@@ -188,8 +226,9 @@ public class CodeEditorController extends Application {
 
 		VBox layout = new VBox(); 
 		layout.setSpacing(10);
-		ObservableList list = layout.getChildren(); 
-		list.addAll(title, toolBar, editor,revertEdits,outputTitle,output);  
+		ObservableList list = layout.getChildren();
+        layout.getChildren().addAll(menuBar);
+        list.addAll(title, toolBar, editor,revertEdits,outputTitle,output);
 		layout.setStyle("-fx-background-color: cornsilk; -fx-padding: 10;");
 
 		compile.setOnAction(new EventHandler<ActionEvent>() {
@@ -210,7 +249,7 @@ public class CodeEditorController extends Application {
 					e.printStackTrace();
 				}
 
-				String result=gccHelper.runCommand("g++ test.cpp -o test");
+				String result = GccHelper.runCommand("g++ test.cpp -o test");
 				output.setText(result);
 			}
 		});
@@ -219,7 +258,7 @@ public class CodeEditorController extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				String result=gccHelper.runCommand("./" + "test");
+				String result = GccHelper.runCommand("./" + "test");
 				output.setText(result);
 			}
 		});
@@ -261,6 +300,24 @@ public class CodeEditorController extends Application {
 
 			}
 		});
+
+        open.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                FileChooser fileChooser = new FileChooser();
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CPP files (*.cpp)", "*.cpp");
+                fileChooser.getExtensionFilters().add(extFilter);
+                File file = fileChooser.showOpenDialog(stage);
+                String path=file.toString();
+                try {
+                    String content = new String ( Files.readAllBytes( Paths.get(path) ) );
+                    editor.setText(content);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
 
 		// display the scene.
 		final Scene scene = new Scene(layout);

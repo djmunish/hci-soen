@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class GccHelper { // Linker File
-	public String runCommand(String command) {
+	public static String runCommand(String command) {
 		String result = null;
 		String line=null;
 		try {
