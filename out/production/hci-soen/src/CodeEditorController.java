@@ -1,10 +1,5 @@
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Time;
@@ -40,6 +35,7 @@ import javafx.stage.Stage;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import javafx.application.Application;
@@ -281,8 +277,31 @@ public class CodeEditorController extends Application {
 					e.printStackTrace();
 				}
 
-				String result = GccHelper.runCommand("g++ test.cpp -o test");
-				output.setText(result);
+
+
+
+				String result = "";
+				try {
+					Process process = Runtime.getRuntime().exec("g++ test.cpp -o test");
+					String line;
+					BufferedReader errorReader = new BufferedReader(
+							new InputStreamReader(process.getErrorStream()));
+					while ((line = errorReader.readLine()) != null) {
+						System.out.println(line);
+						result += line +"\n";
+					}
+					if(!GccHelper.isNullOrEmpty(result)){
+						output.setText(result);
+					}
+					else{
+						output.setText("command executed, any errors? No");
+					}
+					errorReader.close();
+
+				} catch (IOException e) {
+					e.printStackTrace();
+					System.out.println(e);
+				}
 			}
 		});
 
@@ -290,8 +309,55 @@ public class CodeEditorController extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				String result = GccHelper.runCommand("./" + "test");
-				output.setText(result);
+//				 GccHelper.runCompile("./" + "test");
+//				output.setText(result);
+
+
+				try {
+					Process process = Runtime.getRuntime().exec("./" + "test");
+
+					BufferedWriter writer = new BufferedWriter(
+							new OutputStreamWriter(process.getOutputStream()));
+
+
+					TextInputDialog dialog = new TextInputDialog("Enter your input");
+
+					dialog.setHeaderText("Enter your inputs if any:");
+					dialog.setContentText("Input:");
+
+					Optional<String> result = dialog.showAndWait();
+
+					result.ifPresent(input -> {
+						System.out.println(input);
+						try {
+							writer.write(input);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					});
+
+					writer.close();
+					String resultO = "";
+
+					BufferedReader reader = new BufferedReader(new InputStreamReader(
+							process.getInputStream()));
+					String line;
+					while ((line = reader.readLine()) != null) {
+						System.out.println(line);
+						resultO += line +"\n";
+
+					}
+					if(!GccHelper.isNullOrEmpty(resultO)){
+						output.setText(resultO);
+					}
+					else{
+						output.setText("command executed, any errors? No");
+					}
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
 			}
 		});
 

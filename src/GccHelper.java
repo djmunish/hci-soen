@@ -1,5 +1,8 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import javafx.scene.control.TextInputDialog;
+
+import java.io.*;
+import java.util.Optional;
+import java.util.Scanner;
 
 public class GccHelper { // Linker File
 	public static String runCommand(String command) {
@@ -16,9 +19,8 @@ public class GccHelper { // Linker File
 			while((line = input.readLine()) != null) {
 				if(!isNullOrEmpty(line)){
 					result += line + "\n";
+				}
 				System.out.println("result="+line);
-
-			}
 			}
 			System.out.println("dsad="+result);
 
@@ -40,6 +42,68 @@ public class GccHelper { // Linker File
 		}
 
 		
+	}
+
+
+	public static void runCompile(String command){
+
+		try {
+			Process process = Runtime.getRuntime().exec(command);
+
+			BufferedWriter writer = new BufferedWriter(
+					new OutputStreamWriter(process.getOutputStream()));
+
+
+			TextInputDialog dialog = new TextInputDialog("Enter your input");
+
+			dialog.setHeaderText("Enter your inputs if any:");
+			dialog.setContentText("Input:");
+
+			Optional<String> result = dialog.showAndWait();
+
+			result.ifPresent(input -> {
+				System.out.println(input);
+				try {
+					writer.write(input);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+
+			writer.close();
+
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					process.getInputStream()));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				System.out.println(line);
+			}
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+	public static void compileCode(String command) {
+
+		try {
+			Process process = Runtime.getRuntime().exec(command);
+			String line;
+			BufferedReader errorReader = new BufferedReader(
+					new InputStreamReader(process.getErrorStream()));
+			while ((line = errorReader.readLine()) != null) {
+				System.out.println(line);
+			}
+			errorReader.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+
 	}
 
 	public static boolean isNullOrEmpty(String str) {
