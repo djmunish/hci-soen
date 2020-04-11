@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 public class GccHelper { // Linker File
 	public static String runCommand(String command) {
 		String result = "";
-		String line=null;
+		String line = null;
 		try {
 			Runtime rt = Runtime.getRuntime();
 			//Process pr = rt.exec("./test"); //running
@@ -39,6 +39,7 @@ public class GccHelper { // Linker File
 			return("exception"+e.toString());
 		}
 
+		
 	}
 
 	public static boolean isNullOrEmpty(String str) {

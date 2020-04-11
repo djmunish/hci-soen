@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +37,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 
@@ -126,7 +134,27 @@ public class CodeEditorController extends Application {
 		Button optimize = new Button("Optimize");
 		Image setting = new Image(getClass().getResourceAsStream("images/settings.png"),20,20,true,true);
 		optimize.setGraphic(new ImageView(setting));
-		toolBar.getItems().add(optimize);
+//		toolBar.getItems().add(optimize);
+
+
+		String opt1[] = {"Ofast","O1", "O2", "O3"};
+		ChoiceBox<String> optimizeOption = new ChoiceBox<>(FXCollections.observableArrayList(opt1));
+		Platform.runLater(() -> {
+			SkinBase<ChoiceBox<String>> skin = (SkinBase<ChoiceBox<String>>) optimizeOption.getSkin();
+			// children contain only "Label label" and "StackPane openButton"
+			for (Node child : skin.getChildren()) {
+				if (child instanceof Label) {
+					Label label = (Label) child;
+					if (label.getText().isEmpty()) {
+						label.setText("Optimize Options");
+					}
+					return;
+				}
+			}
+		});
+		toolBar.getItems().add(optimizeOption);
+
+		final ObservableList<String> optionsOptimize = FXCollections.observableArrayList();
 
 
 		String opt[] = {"Assembly File", "Executable File", "Binary File"};
@@ -301,7 +329,6 @@ public class CodeEditorController extends Application {
 			});
 
 
-
 		open.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -337,8 +364,6 @@ public class CodeEditorController extends Application {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-
 			}
 		});
 
@@ -372,9 +397,10 @@ public class CodeEditorController extends Application {
 						Process pr = rt.exec("g++ -S test.cpp");
 						output.setText("Assembly File Generated");
 						File file = new File("test.s");
+						TimeUnit.SECONDS.sleep(2);
 						if(!file.createNewFile())
 							java.awt.Desktop.getDesktop().open(file);
-					} catch (IOException e) {
+					} catch (IOException | InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -401,6 +427,59 @@ public class CodeEditorController extends Application {
 			}
 
 		});
+
+		optimizeOption.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue ov, Number value, Number new_value) {
+				// TODO Auto-generated method stub
+				Runtime rt = Runtime.getRuntime();
+				if(opt1[new_value.intValue()].equals("Ofast")){
+					try {
+						Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
+						output.setText("Binary File Generated ");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if(opt1[new_value.intValue()].equals("O1")){
+
+					try {
+						Process pr = rt.exec("g++ -O1 test.cpp -o optimizeCode");
+						output.setText("Assembly File Generated");
+						File file = new File("test.s");
+						TimeUnit.SECONDS.sleep(2);
+						if(!file.createNewFile())
+							java.awt.Desktop.getDesktop().open(file);
+					} catch (IOException | InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+				else if(opt1[new_value.intValue()].equals("O2")){
+					try {
+						Process pr = rt.exec("g++ -O2 test.cpp -o optimizeCode");
+						output.setText("Executable File Generated");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if(opt1[new_value.intValue()].equals("O3")){
+					try {
+						Process pr = rt.exec("g++ -O3 test.cpp -o optimizeCode");
+						output.setText("Binary File Generated ");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		});
+
 		// display the scene.
 		final Scene scene = new Scene(layout);
 		stage.setScene(scene);
