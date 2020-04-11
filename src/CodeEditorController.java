@@ -292,9 +292,11 @@ public class CodeEditorController extends Application {
 					}
 					if(!GccHelper.isNullOrEmpty(result)){
 						output.setText(result);
+						output.setStyle("-fx-text-fill: red ;") ;
 					}
 					else{
 						output.setText("command executed, any errors? No");
+						output.setStyle("") ;
 					}
 					errorReader.close();
 
@@ -320,12 +322,14 @@ public class CodeEditorController extends Application {
 							new OutputStreamWriter(process.getOutputStream()));
 
 
-					TextInputDialog dialog = new TextInputDialog("Enter your input");
+					TextInputDialog dialog = new TextInputDialog("");
 
-					dialog.setHeaderText("Enter your inputs if any:");
+					dialog.setHeaderText("Enter your inputs if any (leave blank if no input):");
 					dialog.setContentText("Input:");
+                    dialog.setResizable(true);
 
-					Optional<String> result = dialog.showAndWait();
+                    dialog.setWidth(650);
+                    Optional<String> result = dialog.showAndWait();
 
 					result.ifPresent(input -> {
 						System.out.println(input);

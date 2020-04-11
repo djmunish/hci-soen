@@ -8,13 +8,15 @@ int main()
     int firstNumber, secondNumber, sumOfTwoNumbers;
     
     cout << "Enter two integers: ";
-  cin >> firstNumber >> secondNumber;
+
 
     // sum of two numbers in stored in variable sumOfTwoNumbers
-    sumOfTwoNumbers = firstNumber+ secondNumber;
 
+int x, y ;
+cin >> x >> y;
+    sumOfTwoNumbers = x* y;
     // Prints sum 
-    cout << firstNumber << " + " <<  secondNumber << " = " << sumOfTwoNumbers;     
+    cout << x << " X " <<  y << " = " << sumOfTwoNumbers;
 
     return 0;
 }

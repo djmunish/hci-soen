@@ -3,24 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="719c27ff-4274-4dce-951c-7f5e8ff9869f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/debug" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/optimize" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/optimizeCode" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/hci-soen/debug" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/hci-soen/optimize" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/hci-soen/optimizeCode" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/hci-soen/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/hci-soen/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/hci-soen/src/CodeEditorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/hci-soen/src/CodeEditorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/hci-soen/src/GccHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/hci-soen/src/GccHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/hci-soen/test" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/hci-soen/test" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/hci-soen/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/hci-soen/test.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/hci-soen/test.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/hci-soen/test.s" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CodeEditorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CodeEditorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GccHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GccHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test" beforeDir="false" afterPath="$PROJECT_DIR$/test" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.s" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,8 +25,9 @@
     <session id="600066881">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.20" value="1" />
@@ -45,20 +35,20 @@
           <entry key="project.open.time.33" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.opened" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="cpp" value="32" />
           <entry key="dummy" value="11" />
-          <entry key="java" value="2318" />
+          <entry key="java" value="2397" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="C++" value="32" />
-          <entry key="JAVA" value="2318" />
+          <entry key="JAVA" value="2397" />
           <entry key="PLAIN_TEXT" value="11" />
         </counts>
       </usages-collector>
@@ -87,7 +77,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
+            <state relative-caret-position="30">
               <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -99,11 +89,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CodeEditorController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="354" column="21" selection-start-line="354" selection-start-column="21" selection-end-line="354" selection-end-column="21" />
+            <state relative-caret-position="174">
+              <caret line="327" column="41" selection-start-line="327" selection-start-column="27" selection-end-line="327" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5612#5620#0" expanded="true" />
                 <element signature="e#8037#8038#0" expanded="true" />
                 <element signature="e#8066#8067#0" expanded="true" />
               </folding>
@@ -153,8 +142,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+            <state relative-caret-position="285">
+              <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -162,8 +151,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GccHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="49" column="8" selection-start-line="49" selection-start-column="8" selection-end-line="83" selection-end-column="9" />
+            <state relative-caret-position="-24">
+              <caret line="72" column="27" lean-forward="true" selection-start-line="72" selection-start-column="27" selection-end-line="72" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -196,6 +185,8 @@
       <find>open</find>
       <find>open.</find>
       <find>writer</find>
+      <find>Enter</find>
+      <find>enter</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -226,8 +217,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -244,11 +233,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1586571027087" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1586571034840" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -308,7 +299,7 @@
     <frame x="65" y="-1036" width="1581" height="954" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22677062" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22936971" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -317,7 +308,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.31206498" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31206498" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39950064" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -379,6 +370,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
@@ -412,25 +413,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="285">
+          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GccHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="49" column="8" selection-start-line="49" selection-start-column="8" selection-end-line="83" selection-end-column="9" />
+        <state relative-caret-position="-24">
+          <caret line="72" column="27" lean-forward="true" selection-start-line="72" selection-start-column="27" selection-end-line="72" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -439,11 +430,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CodeEditorController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="354" column="21" selection-start-line="354" selection-start-column="21" selection-end-line="354" selection-end-column="21" />
+        <state relative-caret-position="174">
+          <caret line="327" column="41" selection-start-line="327" selection-start-column="27" selection-end-line="327" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5612#5620#0" expanded="true" />
             <element signature="e#8037#8038#0" expanded="true" />
             <element signature="e#8066#8067#0" expanded="true" />
           </folding>

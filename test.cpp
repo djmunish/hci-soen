@@ -11,10 +11,12 @@ int main()
 
 
     // sum of two numbers in stored in variable sumOfTwoNumbers
-    sumOfTwoNumbers = 3* 4;
 
+int x, y ;
+cin >> x >> y;
+    sumOfTwoNumbers = x* y;
     // Prints sum 
-    cout << firstNumber << " X " <<  secondNumber << " = " << sumOfTwoNumbers;     
+    cout << x << " X " <<  y << " = " << sumOfTwoNumbers;
 
     return 0;
 }
