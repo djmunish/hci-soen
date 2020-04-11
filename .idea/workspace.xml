@@ -35,13 +35,13 @@
         <counts>
           <entry key="cpp" value="32" />
           <entry key="dummy" value="11" />
-          <entry key="java" value="1794" />
+          <entry key="java" value="1844" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="C++" value="32" />
-          <entry key="JAVA" value="1794" />
+          <entry key="JAVA" value="1844" />
           <entry key="PLAIN_TEXT" value="11" />
         </counts>
       </usages-collector>
@@ -79,8 +79,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CodeEditorController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="176" column="10" selection-start-line="176" selection-start-column="10" selection-end-line="176" selection-end-column="10" />
+            <state relative-caret-position="518">
+              <caret line="468" column="20" selection-start-line="468" selection-end-line="469" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5612#5620#0" expanded="true" />
@@ -170,6 +170,9 @@
       <find>Ofast</find>
       <find>options</find>
       <find>optimizeOption</find>
+      <find>CheckComboBox</find>
+      <find>allOptions</find>
+      <find>developerOption</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -291,8 +294,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.26217228" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39950064" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26217228" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39950064" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -410,8 +413,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CodeEditorController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="176" column="10" selection-start-line="176" selection-start-column="10" selection-end-line="176" selection-end-column="10" />
+        <state relative-caret-position="518">
+          <caret line="468" column="20" selection-start-line="468" selection-end-line="469" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5612#5620#0" expanded="true" />

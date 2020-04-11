@@ -180,6 +180,7 @@ public class CodeEditorController extends Application {
 			codeGenerate.setVisible(false);
 			optimize.setVisible(false);
 			developerOption.setVisible(false);
+			optimizeOption.setVisible(false);
 			//toolBar.getItems().removeAll(codeGenerate,developerOption,optimize);
 
 			options.addAll(codeGenerate.getText(),optimize.getText(),"Developer Option");
@@ -208,7 +209,8 @@ public class CodeEditorController extends Application {
 					}
 
 					if(!(list.contains("Optimize"))) {
-						optimize.setVisible(false);	
+						optimizeOption.setVisible(false);
+						optimize.setVisible(false);
 					}
 
 					if(!(list.contains("Developer Option"))) {
@@ -228,6 +230,7 @@ public class CodeEditorController extends Application {
 
 					if(buttonSelected.contentEquals("Optimize")) {
 						optimize.setVisible(true);
+						optimizeOption.setVisible(true);
 					}
 
 					if(buttonSelected.contentEquals("Developer Option")) {
@@ -437,7 +440,8 @@ public class CodeEditorController extends Application {
 				if(opt1[new_value.intValue()].equals("Ofast")){
 					try {
 						Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
-						output.setText("Binary File Generated ");
+						String optResult = GccHelper.runCommand("./optimizeCode");
+						output.setText("Optimized Result:"+optResult);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -447,12 +451,9 @@ public class CodeEditorController extends Application {
 
 					try {
 						Process pr = rt.exec("g++ -O1 test.cpp -o optimizeCode");
-						output.setText("Assembly File Generated");
-						File file = new File("test.s");
-						TimeUnit.SECONDS.sleep(2);
-						if(!file.createNewFile())
-							java.awt.Desktop.getDesktop().open(file);
-					} catch (IOException | InterruptedException e) {
+						String optResult = GccHelper.runCommand("./optimizeCode");
+						output.setText("Optimized Result:"+optResult);
+					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -461,7 +462,8 @@ public class CodeEditorController extends Application {
 				else if(opt1[new_value.intValue()].equals("O2")){
 					try {
 						Process pr = rt.exec("g++ -O2 test.cpp -o optimizeCode");
-						output.setText("Executable File Generated");
+						String optResult = GccHelper.runCommand("./optimizeCode");
+						output.setText("Optimized Result:"+optResult);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -470,7 +472,8 @@ public class CodeEditorController extends Application {
 				else if(opt1[new_value.intValue()].equals("O3")){
 					try {
 						Process pr = rt.exec("g++ -O3 test.cpp -o optimizeCode");
-						output.setText("Binary File Generated ");
+						String optResult = GccHelper.runCommand("./optimizeCode");
+						output.setText("Optimized Result:"+optResult);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
