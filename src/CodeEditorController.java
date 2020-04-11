@@ -1,5 +1,10 @@
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Time;
@@ -35,13 +40,20 @@ import javafx.stage.Stage;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.SepiaTone;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 
 public class CodeEditorController extends Application {
@@ -117,6 +129,9 @@ public class CodeEditorController extends Application {
 		switchUser.setGraphic(new ImageView(sort));
 		toolBar.getItems().add(switchUser);
 
+		Button importFile = new Button("Import");
+		toolBar.getItems().add(importFile);	
+
 		Button linking = new Button("Linking");
 		Image linkImg = new Image(getClass().getResourceAsStream("images/link.png"),20,20,true,true);
 		linking.setGraphic(new ImageView(linkImg));
@@ -130,28 +145,7 @@ public class CodeEditorController extends Application {
 		Button optimize = new Button("Optimize");
 		Image setting = new Image(getClass().getResourceAsStream("images/settings.png"),20,20,true,true);
 		optimize.setGraphic(new ImageView(setting));
-//		toolBar.getItems().add(optimize);
-
-
-		String opt1[] = {"Ofast","O1", "O2", "O3"};
-		ChoiceBox<String> optimizeOption = new ChoiceBox<>(FXCollections.observableArrayList(opt1));
-		Platform.runLater(() -> {
-			SkinBase<ChoiceBox<String>> skin = (SkinBase<ChoiceBox<String>>) optimizeOption.getSkin();
-			// children contain only "Label label" and "StackPane openButton"
-			for (Node child : skin.getChildren()) {
-				if (child instanceof Label) {
-					Label label = (Label) child;
-					if (label.getText().isEmpty()) {
-						label.setText("Optimize Options");
-					}
-					return;
-				}
-			}
-		});
-		toolBar.getItems().add(optimizeOption);
-
-		final ObservableList<String> optionsOptimize = FXCollections.observableArrayList();
-
+		toolBar.getItems().add(optimize);
 
 		String opt[] = {"Assembly File", "Executable File", "Binary File"};
 		ChoiceBox<String> developerOption = new ChoiceBox<>(FXCollections.observableArrayList(opt));
@@ -176,7 +170,6 @@ public class CodeEditorController extends Application {
 			codeGenerate.setVisible(false);
 			optimize.setVisible(false);
 			developerOption.setVisible(false);
-			optimizeOption.setVisible(false);
 			//toolBar.getItems().removeAll(codeGenerate,developerOption,optimize);
 
 			options.addAll(codeGenerate.getText(),optimize.getText(),"Developer Option");
@@ -205,8 +198,7 @@ public class CodeEditorController extends Application {
 					}
 
 					if(!(list.contains("Optimize"))) {
-						optimizeOption.setVisible(false);
-						optimize.setVisible(false);
+						optimize.setVisible(false);	
 					}
 
 					if(!(list.contains("Developer Option"))) {
@@ -226,7 +218,6 @@ public class CodeEditorController extends Application {
 
 					if(buttonSelected.contentEquals("Optimize")) {
 						optimize.setVisible(true);
-						optimizeOption.setVisible(true);
 					}
 
 					if(buttonSelected.contentEquals("Developer Option")) {
@@ -252,12 +243,14 @@ public class CodeEditorController extends Application {
 			}
 		});
 
+		menuBar.setStyle("-fx-background-color: #5C80BC;");
+		toolBar.setStyle("-fx-background-color: #5C80BC;");
 		VBox layout = new VBox(); 
 		layout.setSpacing(10);
 		ObservableList list = layout.getChildren();
 		layout.getChildren().addAll(menuBar);
 		list.addAll(title, toolBar, editor,revertEdits,outputTitle,output);
-		layout.setStyle("-fx-background-color: cornsilk; -fx-padding: 10;");
+		layout.setStyle("-fx-background-color: #CDD1C4; -fx-padding: 10;");
 
 		compile.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -277,31 +270,8 @@ public class CodeEditorController extends Application {
 					e.printStackTrace();
 				}
 
-
-
-
-				String result = "";
-				try {
-					Process process = Runtime.getRuntime().exec("g++ test.cpp -o test");
-					String line;
-					BufferedReader errorReader = new BufferedReader(
-							new InputStreamReader(process.getErrorStream()));
-					while ((line = errorReader.readLine()) != null) {
-						System.out.println(line);
-						result += line +"\n";
-					}
-					if(!GccHelper.isNullOrEmpty(result)){
-						output.setText(result);
-					}
-					else{
-						output.setText("command executed, any errors? No");
-					}
-					errorReader.close();
-
-				} catch (IOException e) {
-					e.printStackTrace();
-					System.out.println(e);
-				}
+				String result = GccHelper.runCommand("g++ test.cpp -o test");
+				output.setText(result);
 			}
 		});
 
@@ -309,55 +279,8 @@ public class CodeEditorController extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-//				 GccHelper.runCompile("./" + "test");
-//				output.setText(result);
-
-
-				try {
-					Process process = Runtime.getRuntime().exec("./" + "test");
-
-					BufferedWriter writer = new BufferedWriter(
-							new OutputStreamWriter(process.getOutputStream()));
-
-
-					TextInputDialog dialog = new TextInputDialog("Enter your input");
-
-					dialog.setHeaderText("Enter your inputs if any:");
-					dialog.setContentText("Input:");
-
-					Optional<String> result = dialog.showAndWait();
-
-					result.ifPresent(input -> {
-						System.out.println(input);
-						try {
-							writer.write(input);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					});
-
-					writer.close();
-					String resultO = "";
-
-					BufferedReader reader = new BufferedReader(new InputStreamReader(
-							process.getInputStream()));
-					String line;
-					while ((line = reader.readLine()) != null) {
-						System.out.println(line);
-						resultO += line +"\n";
-
-					}
-					if(!GccHelper.isNullOrEmpty(resultO)){
-						output.setText(resultO);
-					}
-					else{
-						output.setText("command executed, any errors? No");
-					}
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
+				String result = GccHelper.runCommand("./" + "test");
+				output.setText(result);
 			}
 		});
 
@@ -397,6 +320,25 @@ public class CodeEditorController extends Application {
 
 			});
 
+		importFile.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				FileChooser fileChooser = new FileChooser();
+				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CPP files (*.cpp)", "*.cpp");
+				fileChooser.getExtensionFilters().add(extFilter);
+				File file = fileChooser.showOpenDialog(stage);
+				String path=file.toString();
+				try {
+					String content = new String ( Files.readAllBytes( Paths.get(path) ) );
+					editor.setText(content);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
 
 		open.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -441,14 +383,13 @@ public class CodeEditorController extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub	
-				//					Runtime rt = Runtime.getRuntime();
-//					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
-
 				String debugResult1 = GccHelper.runCommand("g++ -D DEBUG test.cpp -o debug");
-				System.out.println(debugResult1);
+				System.out.println("debugRes1"+debugResult1);
+				
 				String debugResult = GccHelper.runCommand("./debug");
-				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
+				
+				output.setText("Debug Result:"+debugResult);
+				//TimeUnit.SECONDS.sleep(2);
 
 			}
 		});
@@ -496,59 +437,6 @@ public class CodeEditorController extends Application {
 			}
 
 		});
-
-		optimizeOption.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue ov, Number value, Number new_value) {
-				// TODO Auto-generated method stub
-				Runtime rt = Runtime.getRuntime();
-				if(opt1[new_value.intValue()].equals("Ofast")){
-					try {
-						Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
-						String optResult = GccHelper.runCommand("./optimizeCode");
-						output.setText("Optimized Result:"+optResult);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(opt1[new_value.intValue()].equals("O1")){
-
-					try {
-						Process pr = rt.exec("g++ -O1 test.cpp -o optimizeCode");
-						String optResult = GccHelper.runCommand("./optimizeCode");
-						output.setText("Optimized Result:"+optResult);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
-				else if(opt1[new_value.intValue()].equals("O2")){
-					try {
-						Process pr = rt.exec("g++ -O2 test.cpp -o optimizeCode");
-						String optResult = GccHelper.runCommand("./optimizeCode");
-						output.setText("Optimized Result:"+optResult);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(opt1[new_value.intValue()].equals("O3")){
-					try {
-						Process pr = rt.exec("g++ -O3 test.cpp -o optimizeCode");
-						String optResult = GccHelper.runCommand("./optimizeCode");
-						output.setText("Optimized Result:"+optResult);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-
-		});
-
 		// display the scene.
 		final Scene scene = new Scene(layout);
 		stage.setScene(scene);
