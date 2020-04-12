@@ -27,7 +27,7 @@ public final class Constants {
     public static final String TYPICAL = "Typical";
 
     //Alerts
-    public static final String SELECT_USER_TYPE = "Select Uset Type";
+    public static final String SELECT_USER_TYPE = "Select User Type";
     public static final String TITLE_SCREEN = "Welcome to SmartGCC";
     public static final String GET_STATED_BUTTON = "Get Started";
     public static final String TITLE_COMPILER = "GCC Compiler";

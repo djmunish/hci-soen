@@ -92,7 +92,7 @@ public class Main extends Application {
 
         vbox.setPrefWidth(500);
 
-        vbox.setStyle("-fx-background-color:POWDERBLUE");
+        vbox.setStyle("-fx-background-color:#74748E");
         primaryStage.setScene(scene);
         primaryStage.setWidth(500);
         primaryStage.setHeight(500);
