@@ -42,6 +42,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 
 
 
@@ -63,17 +64,21 @@ public class CodeEditorController extends Application {
 		MenuItem open = new MenuItem("Open");
 		menuFile.getItems().addAll(open);
 
+		// --- Code Edit
+		Menu edit = new Menu("Edit");
+		MenuItem undo = new MenuItem("Undo Typing");
+		MenuItem redo = new MenuItem("Redo Typing");
+		edit.getItems().addAll(undo,redo);
+		
 
-		// --- Menu Edit
-		Menu menuEdit = new Menu("Edit");
-		MenuItem copy = new MenuItem("Copy");
-		MenuItem cut = new MenuItem("Cut");
-		MenuItem paste = new MenuItem("Paste");
-		menuEdit.getItems().addAll(copy, cut, paste);
+		// --- Menu Save
+		Menu save = new Menu("Save");
+		MenuItem saveFile = new MenuItem("Save File");
+		save.getItems().addAll(saveFile);
 
 		// --- Menu View
 
-		menuBar.getMenus().addAll(menuFile, menuEdit);
+		menuBar.getMenus().addAll(menuFile,edit,save);
 
 		Label title = new Label("CodeEditor");
 		title.setStyle("-fx-font-size: 20;");
@@ -136,8 +141,8 @@ public class CodeEditorController extends Application {
 		Button optimize = new Button("Optimize");
 		Image setting = new Image(getClass().getResourceAsStream("images/settings.png"),20,20,true,true);
 		optimize.setGraphic(new ImageView(setting));
-//		toolBar.getItems().add(optimize);
-		
+		//		toolBar.getItems().add(optimize);
+
 		String opt1[] = {"Ofast","O1", "O2", "O3"};
 		ChoiceBox<String> optimizeOption = new ChoiceBox<>(FXCollections.observableArrayList(opt1));
 		Platform.runLater(() -> {
@@ -193,11 +198,12 @@ public class CodeEditorController extends Application {
 		}
 
 		// Create the CheckComboBox with the data 
+
 		final CheckComboBox<String> allOptions = new CheckComboBox<String>(options);
 
 		// and listen to the relevant events (e.g. when the selected indices or 
 		// selected items change).
-		
+		allOptions.setMaxWidth(1);
 		allOptions.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
 			public void onChanged(ListChangeListener.Change<? extends String> c) {
 				//System.out.println(allOptions.getCheckModel().getCheckedItems());
@@ -325,8 +331,8 @@ public class CodeEditorController extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-//				 GccHelper.runCompile("./" + "test");
-//				output.setText(result);
+				//				 GccHelper.runCompile("./" + "test");
+				//				output.setText(result);
 
 
 				try {
@@ -412,7 +418,42 @@ public class CodeEditorController extends Application {
 				}
 			}
 
-			});
+		});
+		
+		undo.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				editor.undo();}
+		});
+		
+		redo.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				editor.redo();
+			}
+		});
+
+		saveFile.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				FileWriter fileWriter;
+				try {
+					fileWriter = new FileWriter("test.cpp");
+					fileWriter.write(editor.getText());
+					fileWriter.close();
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("File Saved Successfully!");
+					alert.showAndWait();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
+
 
 
 		open.setOnAction(new EventHandler<ActionEvent>() {
@@ -460,7 +501,7 @@ public class CodeEditorController extends Application {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub	
 				//					Runtime rt = Runtime.getRuntime();
-//					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
+				//					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
 
 				String debugResult1 = GccHelper.runCommand("g++ -D DEBUG test.cpp -o debug");
 				System.out.println(debugResult1);
@@ -571,5 +612,5 @@ public class CodeEditorController extends Application {
 		stage.setScene(scene);
 		stage.setMaximized(true);
 		stage.show();
-		}
 	}
+}
