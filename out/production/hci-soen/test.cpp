@@ -9,14 +9,16 @@ int main()
     
     cout << "Enter two integers: ";
 
+#ifdef DEBUG
+    cout<<"DEBUG";
+#else
+        cout<<"NOT DEBUG";
+
+
+#endif
 
     // sum of two numbers in stored in variable sumOfTwoNumbers
 
-int x, y ;
-cin >> x >> y;
-    sumOfTwoNumbers = x* y;
-    // Prints sum 
-    cout << x << " X " <<  y << " = " << sumOfTwoNumbers;
 
     return 0;
 }

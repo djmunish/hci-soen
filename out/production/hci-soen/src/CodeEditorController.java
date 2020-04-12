@@ -29,6 +29,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -41,6 +42,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 
 
 
@@ -62,30 +64,39 @@ public class CodeEditorController extends Application {
 		MenuItem open = new MenuItem("Open");
 		menuFile.getItems().addAll(open);
 
+		// --- Code Edit
+		Menu edit = new Menu("Edit");
+		MenuItem undo = new MenuItem("Undo Typing");
+		MenuItem redo = new MenuItem("Redo Typing");
+		edit.getItems().addAll(undo,redo);
+		
 
-		// --- Menu Edit
-		Menu menuEdit = new Menu("Edit");
-		MenuItem copy = new MenuItem("Copy");
-		MenuItem cut = new MenuItem("Cut");
-		MenuItem paste = new MenuItem("Paste");
-		menuEdit.getItems().addAll(copy, cut, paste);
+		// --- Menu Save
+		Menu save = new Menu("Save");
+		MenuItem saveFile = new MenuItem("Save File");
+		save.getItems().addAll(saveFile);
 
 		// --- Menu View
 
-		menuBar.getMenus().addAll(menuFile, menuEdit);
+		menuBar.getMenus().addAll(menuFile,edit,save);
 
 		Label title = new Label("CodeEditor");
 		title.setStyle("-fx-font-size: 20;");
+		title.setTextFill(Color.web("#20202B"));
 		Label outputTitle = new Label("Output");
 		outputTitle.setStyle("-fx-font-size: 20;");
+		outputTitle.setTextFill(Color.web("#20202B"));
 
 		final TextArea editor = new TextArea();
 		editor.setPrefHeight(400); 
 		editor.setPrefWidth(300); 
+		editor.setStyle("-fx-control-inner-background: #F2FAFA");
 		final TextArea output = new TextArea();
 		output.setPrefHeight(200); 
 		output.setPrefWidth(300);
+		output.setStyle("-fx-control-inner-background: #F2FAFA");
 		final Button revertEdits = new Button("Erase All");
+		final Button outputErase = new Button("Erase All");
 
 		String content = new String ( Files.readAllBytes( Paths.get("test.cpp") ) );
 		if(!content.isEmpty()) {
@@ -130,8 +141,7 @@ public class CodeEditorController extends Application {
 		Button optimize = new Button("Optimize");
 		Image setting = new Image(getClass().getResourceAsStream("images/settings.png"),20,20,true,true);
 		optimize.setGraphic(new ImageView(setting));
-//		toolBar.getItems().add(optimize);
-
+		//		toolBar.getItems().add(optimize);
 
 		String opt1[] = {"Ofast","O1", "O2", "O3"};
 		ChoiceBox<String> optimizeOption = new ChoiceBox<>(FXCollections.observableArrayList(opt1));
@@ -188,10 +198,12 @@ public class CodeEditorController extends Application {
 		}
 
 		// Create the CheckComboBox with the data 
+
 		final CheckComboBox<String> allOptions = new CheckComboBox<String>(options);
 
 		// and listen to the relevant events (e.g. when the selected indices or 
 		// selected items change).
+		allOptions.setMaxWidth(1);
 		allOptions.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
 			public void onChanged(ListChangeListener.Change<? extends String> c) {
 				//System.out.println(allOptions.getCheckModel().getCheckedItems());
@@ -241,6 +253,7 @@ public class CodeEditorController extends Application {
 			toolBar.getItems().add(allOptions);
 			final Label allOptionLabel = new Label();
 			allOptionLabel.setText("All Options");
+			allOptionLabel.setTextFill(Color.web("#FBFBFF"));
 			toolBar.getItems().add(allOptionLabel);
 		}
 
@@ -251,13 +264,22 @@ public class CodeEditorController extends Application {
 				editor.setText("");
 			}
 		});
+		outputErase.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override 
+			public void handle(ActionEvent actionEvent) {
+				output.setText("");
+			}
+		});
+		menuBar.setStyle("-fx-background-color: #74748E;-fx-text-base-color:#000000");
+		toolBar.setStyle("-fx-background-color: #74748E;");
 
 		VBox layout = new VBox(); 
 		layout.setSpacing(10);
 		ObservableList list = layout.getChildren();
 		layout.getChildren().addAll(menuBar);
-		list.addAll(title, toolBar, editor,revertEdits,outputTitle,output);
-		layout.setStyle("-fx-background-color: cornsilk; -fx-padding: 10;");
+		list.addAll(title, toolBar, editor,revertEdits,outputTitle,output,outputErase);
+		layout.setStyle("-fx-background-color: #9393A7; -fx-padding: 10;");
 
 		compile.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -292,11 +314,9 @@ public class CodeEditorController extends Application {
 					}
 					if(!GccHelper.isNullOrEmpty(result)){
 						output.setText(result);
-						output.setStyle("-fx-text-fill: red ;") ;
 					}
 					else{
 						output.setText("command executed, any errors? No");
-						output.setStyle("") ;
 					}
 					errorReader.close();
 
@@ -311,8 +331,8 @@ public class CodeEditorController extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-//				 GccHelper.runCompile("./" + "test");
-//				output.setText(result);
+				//				 GccHelper.runCompile("./" + "test");
+				//				output.setText(result);
 
 
 				try {
@@ -324,12 +344,11 @@ public class CodeEditorController extends Application {
 
 					TextInputDialog dialog = new TextInputDialog("");
 
-					dialog.setHeaderText("Enter your inputs if any (leave blank if no input):");
+					dialog.setHeaderText("Enter the input if any (leave blank if no input)");
 					dialog.setContentText("Input:");
-                    dialog.setResizable(true);
 
-                    dialog.setWidth(650);
-                    Optional<String> result = dialog.showAndWait();
+					dialog.setWidth(650);
+					Optional<String> result = dialog.showAndWait();
 
 					result.ifPresent(input -> {
 						System.out.println(input);
@@ -399,7 +418,42 @@ public class CodeEditorController extends Application {
 				}
 			}
 
-			});
+		});
+		
+		undo.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				editor.undo();}
+		});
+		
+		redo.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				editor.redo();
+			}
+		});
+
+		saveFile.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				FileWriter fileWriter;
+				try {
+					fileWriter = new FileWriter("test.cpp");
+					fileWriter.write(editor.getText());
+					fileWriter.close();
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("File Saved Successfully!");
+					alert.showAndWait();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
+
 
 
 		open.setOnAction(new EventHandler<ActionEvent>() {
@@ -447,12 +501,75 @@ public class CodeEditorController extends Application {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub	
 				//					Runtime rt = Runtime.getRuntime();
-//					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
-
+				//					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
+//
 				String debugResult1 = GccHelper.runCommand("g++ -D DEBUG test.cpp -o debug");
 				System.out.println(debugResult1);
-				String debugResult = GccHelper.runCommand("./debug");
-				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
+
+
+//
+//				String debugResult = GccHelper.runCommand("./debug");
+//				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
+
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                        Process process = Runtime.getRuntime().exec("./debug");
+
+                        output.setText("");
+
+
+                        BufferedWriter writer = new BufferedWriter(
+                                new OutputStreamWriter(process.getOutputStream()));
+
+
+                        TextInputDialog dialog = new TextInputDialog("");
+
+                        dialog.setHeaderText("Enter the input if any (leave blank if no input)");
+                        dialog.setContentText("Input:");
+
+                        dialog.setWidth(650);
+                        Optional<String> result = dialog.showAndWait();
+
+                        result.ifPresent(input -> {
+                            System.out.println(input);
+                            try {
+                                writer.write(input);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+
+                        writer.close();
+                        String resultO = "";
+
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                                process.getInputStream()));
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                            resultO += line +"\n";
+
+                        }
+                        System.out.println(resultO);
+                        if(!GccHelper.isNullOrEmpty(resultO)){
+                            output.setText("Debug Result:" + resultO);
+                        }
+                        else{
+                            output.setText("command executed, any errors? No");
+                        }
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+
 
 			}
 		});
@@ -556,8 +673,7 @@ public class CodeEditorController extends Application {
 		// display the scene.
 		final Scene scene = new Scene(layout);
 		stage.setScene(scene);
-		stage.setHeight(700);
-		stage.setWidth(1200);
+		stage.setMaximized(true);
 		stage.show();
-		}
 	}
+}

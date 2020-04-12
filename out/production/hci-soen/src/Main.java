@@ -1,4 +1,7 @@
+import java.util.Optional;
+
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -9,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
@@ -26,6 +30,27 @@ public class Main extends Application {
     	primaryStage.setTitle(Constants.TITLE_SCREEN);
         final ToggleGroup group = new ToggleGroup();
 
+        primary.setOnCloseRequest(e -> {
+        	
+        	 Alert closeConfirmation = new Alert(
+                     Alert.AlertType.CONFIRMATION,
+                     "Are you sure you want to exit?"
+             );
+             Button exitButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+                     ButtonType.OK
+             );
+             exitButton.setText("Exit");
+             closeConfirmation.setHeaderText("Confirm Exit");
+             closeConfirmation.initModality(Modality.APPLICATION_MODAL);
+             closeConfirmation.initOwner(primary);
+             
+             Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
+             if (!ButtonType.OK.equals(closeResponse.get())) {
+                 e.consume();
+             }
+
+        });    
+        
         Label titleLabel = new Label(Constants.SELECT_USER_TYPE);
         titleLabel.setFont(new Font("Avenir", 20));
         titleLabel.setTranslateX(100);
@@ -92,12 +117,14 @@ public class Main extends Application {
 
         vbox.setPrefWidth(500);
 
-        vbox.setStyle("-fx-background-color:POWDERBLUE");
+        vbox.setStyle("-fx-background-color:#74748E");
         primaryStage.setScene(scene);
         primaryStage.setWidth(500);
         primaryStage.setHeight(500);
         primaryStage.show();
     }
+    
+    
 
     public void startCompiler(Stage primaryStage){
     	CodeEditorController codeEditorObj = new CodeEditorController();

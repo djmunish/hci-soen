@@ -344,7 +344,7 @@ public class CodeEditorController extends Application {
 
 					TextInputDialog dialog = new TextInputDialog("");
 
-					dialog.setHeaderText("leave blank if no input");
+					dialog.setHeaderText("Enter the input if any (leave blank if no input)");
 					dialog.setContentText("Input:");
 
 					dialog.setWidth(650);
@@ -502,11 +502,74 @@ public class CodeEditorController extends Application {
 				// TODO Auto-generated method stub	
 				//					Runtime rt = Runtime.getRuntime();
 				//					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
-
+//
 				String debugResult1 = GccHelper.runCommand("g++ -D DEBUG test.cpp -o debug");
 				System.out.println(debugResult1);
-				String debugResult = GccHelper.runCommand("./debug");
-				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
+
+
+//
+//				String debugResult = GccHelper.runCommand("./debug");
+//				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
+
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                        Process process = Runtime.getRuntime().exec("./debug");
+
+                        output.setText("");
+
+
+                        BufferedWriter writer = new BufferedWriter(
+                                new OutputStreamWriter(process.getOutputStream()));
+
+
+                        TextInputDialog dialog = new TextInputDialog("");
+
+                        dialog.setHeaderText("Enter the input if any (leave blank if no input)");
+                        dialog.setContentText("Input:");
+
+                        dialog.setWidth(650);
+                        Optional<String> result = dialog.showAndWait();
+
+                        result.ifPresent(input -> {
+                            System.out.println(input);
+                            try {
+                                writer.write(input);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+
+                        writer.close();
+                        String resultO = "";
+
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                                process.getInputStream()));
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                            resultO += line +"\n";
+
+                        }
+                        System.out.println(resultO);
+                        if(!GccHelper.isNullOrEmpty(resultO)){
+                            output.setText("Debug Result:" + resultO);
+                        }
+                        else{
+                            output.setText("command executed, any errors? No");
+                        }
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+
 
 			}
 		});
