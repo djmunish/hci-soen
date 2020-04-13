@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javafx.scene.layout.HBox;
 import org.controlsfx.control.CheckComboBox;
 
 import javafx.application.Application;
@@ -96,7 +97,10 @@ public class CodeEditorController extends Application {
 		output.setPrefWidth(300);
 		output.setStyle("-fx-control-inner-background: #F2FAFA");
 		final Button revertEdits = new Button("Erase All");
-		final Button outputErase = new Button("Erase All");
+		final Button outputErase = new Button("");
+		Image trash = new Image(getClass().getResourceAsStream("images/trash.png"),20,20,true,true);
+		outputErase.setGraphic(new ImageView(trash));
+
 
 		String content = new String ( Files.readAllBytes( Paths.get("test.cpp") ) );
 		if(!content.isEmpty()) {
@@ -274,11 +278,15 @@ public class CodeEditorController extends Application {
 		menuBar.setStyle("-fx-background-color: #74748E;-fx-text-base-color:#000000");
 		toolBar.setStyle("-fx-background-color: #74748E;");
 
-		VBox layout = new VBox(); 
+		VBox layout = new VBox();
+		HBox outHbox = new HBox();
 		layout.setSpacing(10);
 		ObservableList list = layout.getChildren();
 		layout.getChildren().addAll(menuBar);
-		list.addAll(title, toolBar, editor,revertEdits,outputTitle,output,outputErase);
+
+		outHbox.getChildren().addAll(outputTitle, outputErase);
+		outputErase.setTranslateX(1160);
+		list.addAll(title, toolBar, editor,revertEdits,outHbox,output);
 		layout.setStyle("-fx-background-color: #9393A7; -fx-padding: 10;");
 
 		compile.setOnAction(new EventHandler<ActionEvent>() {

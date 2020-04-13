@@ -69,6 +69,8 @@ public class Main extends Application {
         titleLabel.setPrefWidth(500);
         titleLabel.setTextAlignment(TextAlignment.CENTER);
 
+        //trash icon laga diya
+
         RadioButton noviceOption = new RadioButton(Constants.NOVICE);
         noviceOption.setToggleGroup(group);
         noviceOption.setPrefSize(150, 50);
