@@ -56,6 +56,7 @@ public class CodeEditorController extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		// create the editing controls.
+		stage.getIcons().add(new Image("/Images/c.png"));
 
 
 		MenuBar menuBar = new MenuBar();
@@ -63,10 +64,13 @@ public class CodeEditorController extends Application {
 		// --- Menu File
 		Menu menuFile = new Menu("File");
 		MenuItem open = new MenuItem("Open");
+		menuFile.setStyle("-fx-text-fill: white;");
+
 		menuFile.getItems().addAll(open);
 
 		// --- Code Edit
 		Menu edit = new Menu("Edit");
+		edit.setStyle("-fx-text-fill: white;");
 		MenuItem undo = new MenuItem("Undo Typing");
 		MenuItem redo = new MenuItem("Redo Typing");
 		edit.getItems().addAll(undo,redo);
@@ -74,6 +78,7 @@ public class CodeEditorController extends Application {
 
 		// --- Menu Save
 		Menu save = new Menu("Save");
+		save.setStyle("-fx-text-fill: white;");
 		MenuItem saveFile = new MenuItem("Save File");
 		save.getItems().addAll(saveFile);
 
@@ -82,10 +87,10 @@ public class CodeEditorController extends Application {
 		menuBar.getMenus().addAll(menuFile,edit,save);
 
 		Label title = new Label("CodeEditor");
-		title.setStyle("-fx-font-size: 20;");
+		title.setStyle("-fx-text-fill: white;-fx-font-size: 20;");
 		title.setTextFill(Color.web("#20202B"));
 		Label outputTitle = new Label("Output");
-		outputTitle.setStyle("-fx-font-size: 20;");
+		outputTitle.setStyle("-fx-text-fill: white;-fx-font-size: 20;");
 		outputTitle.setTextFill(Color.web("#20202B"));
 
 		final TextArea editor = new TextArea();
@@ -414,16 +419,80 @@ public class CodeEditorController extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				Runtime rt = Runtime.getRuntime();
+//				Runtime rt = Runtime.getRuntime();
+//				try {
+//					//-O1 -O2 -O3 -Ofast
+//					Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
+//					String optResult = GccHelper.runCommand("./optimizeCode");
+//					output.setText("Optimized Result:"+optResult);
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+
+				String debugResult1 = GccHelper.runCommand("g++ -D DEBUG test.cpp -o debug");
+				System.out.println(debugResult1);
+
+
+//
+//				String debugResult = GccHelper.runCommand("./debug");
+//				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
+
 				try {
-					//-O1 -O2 -O3 -Ofast
-					Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
-					String optResult = GccHelper.runCommand("./optimizeCode");
-					output.setText("Optimized Result:"+optResult);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+
+
+
+				try {
+					Process process = Runtime.getRuntime().exec("./" + "test");
+
+					BufferedWriter writer = new BufferedWriter(
+							new OutputStreamWriter(process.getOutputStream()));
+
+
+					TextInputDialog dialog = new TextInputDialog("");
+
+					dialog.setHeaderText("Enter the input if any (leave blank if no input)");
+					dialog.setContentText("Input:");
+
+					dialog.setWidth(650);
+					Optional<String> result = dialog.showAndWait();
+
+					result.ifPresent(input -> {
+						System.out.println(input);
+						try {
+							writer.write(input);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					});
+
+					writer.close();
+					String resultO = "";
+
+					BufferedReader reader = new BufferedReader(new InputStreamReader(
+							process.getInputStream()));
+					String line;
+					while ((line = reader.readLine()) != null) {
+						System.out.println(line);
+						resultO += line +"\n";
+
+					}
+					if(!GccHelper.isNullOrEmpty(resultO)){
+						output.setText(resultO);
+					}
+					else{
+						output.setText("command executed, any errors? No");
+					}
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+
 			}
 
 		});
@@ -631,46 +700,296 @@ public class CodeEditorController extends Application {
 			@Override
 			public void changed(ObservableValue ov, Number value, Number new_value) {
 				// TODO Auto-generated method stub
-				Runtime rt = Runtime.getRuntime();
+//				Runtime rt = Runtime.getRuntime();
 				if(opt1[new_value.intValue()].equals("Ofast")){
+//					try {
+//						Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
+//						String optResult = GccHelper.runCommand("./optimizeCode");
+//						output.setText("Optimized Result:"+optResult);
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+
+
+
+
+
+					String debugResult1 = GccHelper.runCommand("g++ -Ofast test.cpp -o optimizeCode");
+					System.out.println(debugResult1);
+
+
 					try {
-						Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
-						String optResult = GccHelper.runCommand("./optimizeCode");
-						output.setText("Optimized Result:"+optResult);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+
+
+
+					try {
+						Process process = Runtime.getRuntime().exec("./" + "test");
+
+						BufferedWriter writer = new BufferedWriter(
+								new OutputStreamWriter(process.getOutputStream()));
+
+
+						TextInputDialog dialog = new TextInputDialog("");
+
+						dialog.setHeaderText("Enter the input if any (leave blank if no input)");
+						dialog.setContentText("Input:");
+
+						dialog.setWidth(650);
+						Optional<String> result = dialog.showAndWait();
+
+						result.ifPresent(input -> {
+							System.out.println(input);
+							try {
+								writer.write(input);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						});
+
+						writer.close();
+						String resultO = "";
+
+						BufferedReader reader = new BufferedReader(new InputStreamReader(
+								process.getInputStream()));
+						String line;
+						while ((line = reader.readLine()) != null) {
+							System.out.println(line);
+							resultO += line +"\n";
+
+						}
+						if(!GccHelper.isNullOrEmpty(resultO)){
+							output.setText( "Optimized Result:" + resultO);
+						}
+						else{
+							output.setText("command executed, any errors? No");
+						}
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+
+
+
+
+
+
+
+
 				}
 				else if(opt1[new_value.intValue()].equals("O1")){
 
+//					try {
+//						Process pr = rt.exec("g++ -O1 test.cpp -o optimizeCode");
+//						String optResult = GccHelper.runCommand("./optimizeCode");
+//						output.setText("Optimized Result:"+optResult);
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+
+
+					String debugResult1 = GccHelper.runCommand("g++ -O1 test.cpp -o optimizeCode");
+					System.out.println(debugResult1);
+
+
 					try {
-						Process pr = rt.exec("g++ -O1 test.cpp -o optimizeCode");
-						String optResult = GccHelper.runCommand("./optimizeCode");
-						output.setText("Optimized Result:"+optResult);
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+
+
+
+					try {
+						Process process = Runtime.getRuntime().exec("./" + "test");
+
+						BufferedWriter writer = new BufferedWriter(
+								new OutputStreamWriter(process.getOutputStream()));
+
+
+						TextInputDialog dialog = new TextInputDialog("");
+
+						dialog.setHeaderText("Enter the input if any (leave blank if no input)");
+						dialog.setContentText("Input:");
+
+						dialog.setWidth(650);
+						Optional<String> result = dialog.showAndWait();
+
+						result.ifPresent(input -> {
+							System.out.println(input);
+							try {
+								writer.write(input);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						});
+
+						writer.close();
+						String resultO = "";
+
+						BufferedReader reader = new BufferedReader(new InputStreamReader(
+								process.getInputStream()));
+						String line;
+						while ((line = reader.readLine()) != null) {
+							System.out.println(line);
+							resultO += line +"\n";
+
+						}
+						if(!GccHelper.isNullOrEmpty(resultO)){
+							output.setText( "Optimized Result:" + resultO);
+						}
+						else{
+							output.setText("command executed, any errors? No");
+						}
+						reader.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
 				}
 				else if(opt1[new_value.intValue()].equals("O2")){
+//					try {
+//						Process pr = rt.exec("g++ -O2 test.cpp -o optimizeCode");
+//						String optResult = GccHelper.runCommand("./optimizeCode");
+//						output.setText("Optimized Result:"+optResult);
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+
+
+
+
+					String debugResult1 = GccHelper.runCommand("g++ -O2 test.cpp -o optimizeCode");
+					System.out.println(debugResult1);
+
+
 					try {
-						Process pr = rt.exec("g++ -O2 test.cpp -o optimizeCode");
-						String optResult = GccHelper.runCommand("./optimizeCode");
-						output.setText("Optimized Result:"+optResult);
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+
+
+
+					try {
+						Process process = Runtime.getRuntime().exec("./" + "test");
+
+						BufferedWriter writer = new BufferedWriter(
+								new OutputStreamWriter(process.getOutputStream()));
+
+
+						TextInputDialog dialog = new TextInputDialog("");
+
+						dialog.setHeaderText("Enter the input if any (leave blank if no input)");
+						dialog.setContentText("Input:");
+
+						dialog.setWidth(650);
+						Optional<String> result = dialog.showAndWait();
+
+						result.ifPresent(input -> {
+							System.out.println(input);
+							try {
+								writer.write(input);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						});
+
+						writer.close();
+						String resultO = "";
+
+						BufferedReader reader = new BufferedReader(new InputStreamReader(
+								process.getInputStream()));
+						String line;
+						while ((line = reader.readLine()) != null) {
+							System.out.println(line);
+							resultO += line +"\n";
+
+						}
+						if(!GccHelper.isNullOrEmpty(resultO)){
+							output.setText( "Optimized Result:" + resultO);
+						}
+						else{
+							output.setText("command executed, any errors? No");
+						}
+						reader.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 				else if(opt1[new_value.intValue()].equals("O3")){
+//					try {
+//						Process pr = rt.exec("g++ -O3 test.cpp -o optimizeCode");
+//						String optResult = GccHelper.runCommand("./optimizeCode");
+//						output.setText("Optimized Result:"+optResult);
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+
+
+					String debugResult1 = GccHelper.runCommand("g++ -O3 test.cpp -o optimizeCode");
+					System.out.println(debugResult1);
+
+
 					try {
-						Process pr = rt.exec("g++ -O3 test.cpp -o optimizeCode");
-						String optResult = GccHelper.runCommand("./optimizeCode");
-						output.setText("Optimized Result:"+optResult);
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+
+
+
+					try {
+						Process process = Runtime.getRuntime().exec("./" + "test");
+
+						BufferedWriter writer = new BufferedWriter(
+								new OutputStreamWriter(process.getOutputStream()));
+
+
+						TextInputDialog dialog = new TextInputDialog("");
+
+						dialog.setHeaderText("Enter the input if any (leave blank if no input)");
+						dialog.setContentText("Input:");
+
+						dialog.setWidth(650);
+						Optional<String> result = dialog.showAndWait();
+
+						result.ifPresent(input -> {
+							System.out.println(input);
+							try {
+								writer.write(input);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						});
+
+						writer.close();
+						String resultO = "";
+
+						BufferedReader reader = new BufferedReader(new InputStreamReader(
+								process.getInputStream()));
+						String line;
+						while ((line = reader.readLine()) != null) {
+							System.out.println(line);
+							resultO += line +"\n";
+
+						}
+						if(!GccHelper.isNullOrEmpty(resultO)){
+							output.setText( "Optimized Result:" + resultO);
+						}
+						else{
+							output.setText("command executed, any errors? No");
+						}
+						reader.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

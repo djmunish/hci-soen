@@ -1,3 +1,4 @@
+import java.net.URL;
 import java.util.Optional;
 
 import javafx.application.Application;
@@ -18,11 +19,22 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
+import javax.swing.*;
+
 public class Main extends Application {
     private Constants.userType selectedUserType;
         
     Stage primary;
     public static void main(String[] args) {
+
+
+        try {
+            URL iconURL = Main.class.getResource("images/c.png");
+            java.awt.Image image = new ImageIcon(iconURL).getImage();
+            com.apple.eawt.Application.getApplication().setDockIconImage(image);
+        } catch (Exception e) {
+            // Won't work on Windows or Linux.
+        }
         launch(args);
     }
 
@@ -31,6 +43,7 @@ public class Main extends Application {
         primary = primaryStage;
     	primaryStage.setTitle(Constants.TITLE_SCREEN);
         final ToggleGroup group = new ToggleGroup();
+        primaryStage.getIcons().add(new Image("/Images/c.png"));
 
         primary.setOnCloseRequest(e -> {
         	

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="719c27ff-4274-4dce-951c-7f5e8ff9869f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CodeEditorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CodeEditorController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -37,13 +37,13 @@
         <counts>
           <entry key="cpp" value="32" />
           <entry key="dummy" value="11" />
-          <entry key="java" value="2671" />
+          <entry key="java" value="2807" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="C++" value="32" />
-          <entry key="JAVA" value="2671" />
+          <entry key="JAVA" value="2807" />
           <entry key="PLAIN_TEXT" value="11" />
         </counts>
       </usages-collector>
@@ -52,16 +52,16 @@
           <entry key="CompilerController" value="1" />
           <entry key="cpp" value="1" />
           <entry key="gitignore" value="1" />
-          <entry key="java" value="15" />
-          <entry key="png" value="2" />
+          <entry key="java" value="17" />
+          <entry key="png" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="C++" value="1" />
           <entry key="CLASS" value="1" />
-          <entry key="Image" value="2" />
-          <entry key="JAVA" value="15" />
+          <entry key="Image" value="3" />
+          <entry key="JAVA" value="17" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -72,8 +72,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="78" column="55" lean-forward="true" selection-start-line="78" selection-start-column="55" selection-end-line="78" selection-end-column="55" />
+            <state relative-caret-position="297">
+              <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -84,19 +84,18 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CodeEditorController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1260">
-              <caret line="127" column="51" selection-start-line="126" selection-start-column="4" selection-end-line="127" selection-end-column="51" />
+            <state relative-caret-position="154">
+              <caret line="58" column="39" selection-start-line="58" selection-end-line="59" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#8563#8564#0" expanded="true" />
-                <element signature="e#8592#8593#0" expanded="true" />
-                <element signature="e#8722#8723#0" expanded="true" />
-                <element signature="e#8751#8752#0" expanded="true" />
-                <element signature="e#12719#12720#0" expanded="true" />
-                <element signature="e#12743#12744#0" expanded="true" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/images/trash.png">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -148,15 +147,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="2" selection-start-line="29" selection-start-column="2" selection-end-line="29" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/images/c.png">
           <provider selected="true" editor-type-id="images" />
         </entry>
@@ -203,6 +193,9 @@
       <find>text</find>
       <find>input</find>
       <find>titleLabel</find>
+      <find>outputErase</find>
+      <find>output.setPrefWidth</find>
+      <find>output</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -215,8 +208,8 @@
         <option value="$PROJECT_DIR$/src/CodeEditorExample.java" />
         <option value="$PROJECT_DIR$/src/Constants.java" />
         <option value="$PROJECT_DIR$/src/GccHelper.java" />
-        <option value="$PROJECT_DIR$/src/CodeEditorController.java" />
         <option value="$PROJECT_DIR$/test.cpp" />
+        <option value="$PROJECT_DIR$/src/CodeEditorController.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
@@ -267,14 +260,14 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/images" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/images" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -323,7 +316,7 @@
     <frame x="65" y="-1036" width="1581" height="954" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2345679" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2345679" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -332,7 +325,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.31206498" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.31206498" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39907193" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -384,32 +377,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-324">
           <caret line="46" column="12" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="78" column="55" lean-forward="true" selection-start-line="78" selection-start-column="55" selection-end-line="78" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CodeEditorController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1260">
-          <caret line="127" column="51" selection-start-line="126" selection-start-column="4" selection-end-line="127" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#8563#8564#0" expanded="true" />
-            <element signature="e#8592#8593#0" expanded="true" />
-            <element signature="e#8722#8723#0" expanded="true" />
-            <element signature="e#8751#8752#0" expanded="true" />
-            <element signature="e#12719#12720#0" expanded="true" />
-            <element signature="e#12743#12744#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -465,6 +432,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1020">
           <caret line="72" column="27" selection-start-line="72" selection-start-column="27" selection-end-line="72" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/images/trash.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CodeEditorController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="58" column="39" selection-start-line="58" selection-end-line="59" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

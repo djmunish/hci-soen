@@ -13,7 +13,9 @@
      // sum of two numbers in stored in variable sumOfTwoNumbers
 
 #ifdef DEBUG 
-     sumOfTwoNumbers = 5 * 6;
+ int x, y ;
+ cin >> x >> y;
+     sumOfTwoNumbers = x * y;
      // Prints sum 
      cout  << sumOfTwoNumbers;
 #else
