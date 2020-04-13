@@ -1,24 +1,30 @@
 #include <iostream>
+ 
+ using namespace std;
+ 
+ 
+ int main()
+ {
+     int firstNumber, secondNumber, sumOfTwoNumbers;
+     
+     cout << "Enter two integers: ";
+ 
+ 
+     // sum of two numbers in stored in variable sumOfTwoNumbers
 
-using namespace std;
-
-
-int main()
-{
-    int firstNumber, secondNumber, sumOfTwoNumbers;
-    
-    cout << "Enter two integers: ";
-
-#ifdef DEBUG
-    cout<<"DEBUG";
+#ifdef DEBUG 
+     sumOfTwoNumbers = 5 * 6;
+     // Prints sum 
+     cout  << sumOfTwoNumbers;
 #else
-        cout<<"NOT DEBUG";
-
-
+ int x, y ;
+ cin >> x >> y;
+     sumOfTwoNumbers = x + y;
+     // Prints sum 
+     cout << x << " + " <<  y << " = " << sumOfTwoNumbers;
 #endif
 
-    // sum of two numbers in stored in variable sumOfTwoNumbers
 
-
-    return 0;
-}
+ 
+     return 0;
+ }

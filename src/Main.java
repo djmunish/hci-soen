@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
@@ -49,32 +51,46 @@ public class Main extends Application {
                  e.consume();
              }
 
-        });    
+        });
+
+
+        Image icon = new Image(getClass().getResourceAsStream("images/c.png"),60,60,true,true);
+        ImageView iconView = new ImageView(icon);
+        iconView.setTranslateX(220);
+        iconView.setTranslateY(60);
+
         
         Label titleLabel = new Label(Constants.SELECT_USER_TYPE);
+        titleLabel.setStyle("-fx-text-fill: white;");
+
         titleLabel.setFont(new Font("Avenir", 20));
-        titleLabel.setTranslateX(100);
+        titleLabel.setTranslateX(180);
         titleLabel.setTranslateY(60);
         titleLabel.setPrefWidth(500);
         titleLabel.setTextAlignment(TextAlignment.CENTER);
+
+        //trash icon laga diya 
 
         RadioButton noviceOption = new RadioButton(Constants.NOVICE);
         noviceOption.setToggleGroup(group);
         noviceOption.setPrefSize(150, 50);
         noviceOption.setTranslateX(60);
         noviceOption.setTranslateY(titleLabel.getTranslateY() + 20);
+        noviceOption.setStyle("-fx-text-fill: white;");
 
         RadioButton typicalOption = new RadioButton(Constants.TYPICAL);
         typicalOption.setToggleGroup(group);
         typicalOption.setPrefSize(150, 50);
         typicalOption.setTranslateX(noviceOption.getTranslateX());
         typicalOption.setTranslateY(noviceOption.getTranslateY() + 10);
+        typicalOption.setStyle("-fx-text-fill: white;");
 
         RadioButton expertOption = new RadioButton(Constants.EXPERT);
         expertOption.setToggleGroup(group);
         expertOption.setPrefSize(150, 50);
         expertOption.setTranslateX(noviceOption.getTranslateX());
         expertOption.setTranslateY(typicalOption.getTranslateY() + 10);
+        expertOption.setStyle("-fx-text-fill: white;");
 
         final ToggleGroup tg = new ToggleGroup();
         // add radiobuttons to toggle group
@@ -110,7 +126,7 @@ public class Main extends Application {
             }
         });
 
-        vbox.getChildren().addAll(titleLabel, noviceOption, typicalOption, expertOption, startedBtn);
+        vbox.getChildren().addAll(iconView,titleLabel, noviceOption, typicalOption, expertOption, startedBtn);
 
         Scene scene = new Scene(vbox, 500, 500);
         vbox.setSpacing(10);
