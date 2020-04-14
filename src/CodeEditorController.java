@@ -22,17 +22,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -627,6 +622,45 @@ public class CodeEditorController extends Application {
 			}
 		});
 
+		stage.setOnCloseRequest(e -> {
+        	
+	       	 Alert closeConfirmation = new Alert(
+	                    Alert.AlertType.CONFIRMATION,
+	                    "Do you want to save file?"
+	            );
+	            Button saveButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+	                    ButtonType.OK
+	            );
+	            saveButton.setText("Save");
+	            saveButton.setOnAction(new EventHandler<ActionEvent>() {
+	    			@Override
+	    			public void handle(ActionEvent event) {
+	    				FileWriter fileWriter;
+	    				try {
+	    					fileWriter = new FileWriter("test.cpp");
+	    					fileWriter.write(editor.getText());
+	    					fileWriter.close();
+	    					Alert alert = new Alert(AlertType.INFORMATION);
+	    					alert.setTitle("Information Dialog");
+	    					alert.setHeaderText(null);
+	    					alert.setContentText("File Saved Successfully!");
+	    					alert.showAndWait();
+	    				} catch (IOException e) {
+	    					// TODO Auto-generated catch block
+	    					e.printStackTrace();
+	    				}
+	    			
+	    			}
+	    		});
+	            closeConfirmation.initModality(Modality.APPLICATION_MODAL);
+	            closeConfirmation.initOwner(stage);
+	            
+	            Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
+	            if (!ButtonType.OK.equals(closeResponse.get())) {
+	                e.consume();
+	            }
+
+	       });
 
 
 		open.setOnAction(new EventHandler<ActionEvent>() {
