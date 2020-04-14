@@ -1,32 +1,19 @@
 #include <iostream>
- 
- using namespace std;
+#include "Complex.h"
+
+
+using namespace std;
  
  
  int main()
  {
-     int firstNumber, secondNumber, sumOfTwoNumbers;
+
+cout<<"Creating Complex class"<<endl;
+
+Complex c1(3), c2(3,4);
+
+cout<<"c2: "<<c2.getReal()<"<"<<c2.getImg()<<">"<<endl;
      
-     cout << "Enter two integers: ";
  
- 
-     // sum of two numbers in stored in variable sumOfTwoNumbers
-
-#ifdef DEBUG 
- int x, y ;
- cin >> x >> y;
-     sumOfTwoNumbers = x * y;
-     // Prints sum 
-     cout  << sumOfTwoNumbers;
-#else
- int x, y ;
- cin >> x >> y;
-     sumOfTwoNumbers = x + y;
-     // Prints sum 
-     cout << x << " + " <<  y << " = " << sumOfTwoNumbers;
-#endif
-
-
- 
-     return 0;
+ return 0;
  }

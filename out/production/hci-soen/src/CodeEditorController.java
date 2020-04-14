@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javafx.scene.layout.HBox;
+import javafx.stage.DirectoryChooser;
 import org.controlsfx.control.CheckComboBox;
 
 import javafx.application.Application;
@@ -294,6 +295,98 @@ public class CodeEditorController extends Application {
 		list.addAll(title, toolBar, editor,revertEdits,outHbox,output);
 		layout.setStyle("-fx-background-color: #9393A7; -fx-padding: 10;");
 
+
+		linking.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+
+
+				String cmd1 = "g++ -I";
+
+				DirectoryChooser dir_chooser = new DirectoryChooser();
+
+				File file = dir_chooser.showDialog(stage);
+
+				if (file != null) {
+
+					cmd1 += file.getAbsolutePath() + " -c Complex.cpp -o Complex.o";
+
+
+
+					output.setText("");
+
+					String result = "";
+					try {
+						Process process = Runtime.getRuntime().exec(cmd1);
+						String line;
+						BufferedReader errorReader = new BufferedReader(
+								new InputStreamReader(process.getErrorStream()));
+						while ((line = errorReader.readLine()) != null) {
+							System.out.println(line);
+							result += line +"\n";
+						}
+						if(!GccHelper.isNullOrEmpty(result)){
+							output.setStyle("-fx-text-fill: red ;") ;
+							output.setText(result);
+						}
+						else{
+
+							try {
+								Thread.sleep(2000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							String cmd2 = "g++ -I " + file.getAbsolutePath() + " test.cpp Complex.o -o test";
+
+							output.setText("");
+
+							result = "";
+							try {
+								Process process2 = Runtime.getRuntime().exec(cmd2);
+								String line2;
+								BufferedReader errorReader2 = new BufferedReader(
+										new InputStreamReader(process2.getErrorStream()));
+								while ((line2 = errorReader2.readLine()) != null) {
+									System.out.println("yoo==="+line2);
+									result += line2 +"\n";
+								}
+								if(!GccHelper.isNullOrEmpty(result)){
+									output.setStyle("-fx-text-fill: red ;") ;
+									output.setText(result);
+								}
+								else{
+									output.setStyle("") ;
+									output.setText("command executed, any errors? No");
+								}
+								errorReader.close();
+
+							} catch (IOException e) {
+								e.printStackTrace();
+								System.out.println(e);
+							}
+
+
+						}
+						errorReader.close();
+
+					} catch (IOException e) {
+						e.printStackTrace();
+						System.out.println(e);
+					}
+
+
+
+
+
+
+
+
+				}
+
+
+			}
+		});
+
 		compile.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -314,6 +407,7 @@ public class CodeEditorController extends Application {
 
 
 
+				output.setText("");
 
 				String result = "";
 				try {
@@ -326,9 +420,11 @@ public class CodeEditorController extends Application {
 						result += line +"\n";
 					}
 					if(!GccHelper.isNullOrEmpty(result)){
+						output.setStyle("-fx-text-fill: red ;") ;
 						output.setText(result);
 					}
 					else{
+						output.setStyle("") ;
 						output.setText("command executed, any errors? No");
 					}
 					errorReader.close();
