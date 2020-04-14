@@ -1,4 +1,8 @@
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import javafx.application.Application;
@@ -15,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
@@ -31,7 +36,7 @@ public class Main extends Application {
         try {
             URL iconURL = Main.class.getResource("images/c.png");
             java.awt.Image image = new ImageIcon(iconURL).getImage();
-            com.apple.eawt.Application.getApplication().setDockIconImage(image);
+            //com.apple.eawt.Application.getApplication().setDockIconImage(image);
         } catch (Exception e) {
             // Won't work on Windows or Linux.
         }
@@ -44,27 +49,6 @@ public class Main extends Application {
     	primaryStage.setTitle(Constants.TITLE_SCREEN);
         final ToggleGroup group = new ToggleGroup();
         primaryStage.getIcons().add(new Image("/Images/c.png"));
-
-        primary.setOnCloseRequest(e -> {
-        	
-        	 Alert closeConfirmation = new Alert(
-                     Alert.AlertType.CONFIRMATION,
-                     "Are you sure you want to exit?"
-             );
-             Button exitButton = (Button) closeConfirmation.getDialogPane().lookupButton(
-                     ButtonType.OK
-             );
-             exitButton.setText("Exit");
-             closeConfirmation.setHeaderText("Confirm Exit");
-             closeConfirmation.initModality(Modality.APPLICATION_MODAL);
-             closeConfirmation.initOwner(primary);
-             
-             Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
-             if (!ButtonType.OK.equals(closeResponse.get())) {
-                 e.consume();
-             }
-
-        });
 
 
         Image icon = new Image(getClass().getResourceAsStream("images/c.png"),60,60,true,true);
@@ -156,6 +140,39 @@ public class Main extends Application {
     
 
     public void startCompiler(Stage primaryStage){
+    	
+    	primary.setOnCloseRequest(e -> {
+        	
+       	 Alert closeConfirmation = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Do you want to save file?"
+            );
+            Button saveButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+                    ButtonType.OK
+            );
+            saveButton.setText("Save");
+            saveButton.setOnAction(new EventHandler<ActionEvent>() {
+    			@Override
+    			public void handle(ActionEvent event) {
+    				FileChooser fileChooser = new FileChooser();
+    				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CPP files (*.cpp)", "test.cpp");
+    				fileChooser.getExtensionFilters().add(extFilter);
+    				File file = fileChooser.showOpenDialog(primary);
+    				String path=file.toString();
+    			}
+    		});
+            //closeConfirmation.setHeaderext("Confirm Exit");
+            closeConfirmation.initModality(Modality.APPLICATION_MODAL);
+            closeConfirmation.initOwner(primary);
+            
+            Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
+            if (!ButtonType.OK.equals(closeResponse.get())) {
+                e.consume();
+            }
+
+       });
+
+    	
     	CodeEditorController codeEditorObj = new CodeEditorController();
         codeEditorObj.user = selectedUserType;
         if (selectedUserType == null){

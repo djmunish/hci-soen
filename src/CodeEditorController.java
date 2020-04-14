@@ -53,6 +53,7 @@ public class CodeEditorController extends Application {
 	public void start(Stage stage) throws Exception {
 		// create the editing controls.
 		stage.getIcons().add(new Image("/Images/c.png"));
+		stage.setTitle(Constants.TITLE_COMPILER);
 
 
 		MenuBar menuBar = new MenuBar();
@@ -119,6 +120,7 @@ public class CodeEditorController extends Application {
 		toolBar.getItems().add(compile);
 
 		Button execute = new Button("Execute");
+		execute.setDisable(true);
 		Image play = new Image(getClass().getResourceAsStream("images/play-button.png"),20,20,true,true);
 		execute.setGraphic(new ImageView(play));
 		toolBar.getItems().add(execute);
@@ -351,6 +353,7 @@ public class CodeEditorController extends Application {
 								}
 								else{
 									output.setStyle("") ;
+									execute.setDisable(false);
 									output.setText("command executed, any errors? No");
 								}
 								errorReader.close();
@@ -417,9 +420,11 @@ public class CodeEditorController extends Application {
 					if(!GccHelper.isNullOrEmpty(result)){
 						output.setStyle("-fx-text-fill: red ;") ;
 						output.setText(result);
+						execute.setDisable(true);
 					}
 					else{
 						output.setStyle("") ;
+						execute.setDisable(false);
 						output.setText("command executed, any errors? No");
 					}
 					errorReader.close();
@@ -576,6 +581,7 @@ public class CodeEditorController extends Application {
 						output.setText(resultO);
 					}
 					else{
+						execute.setDisable(false);
 						output.setText("command executed, any errors? No");
 					}
 					reader.close();
@@ -622,45 +628,38 @@ public class CodeEditorController extends Application {
 			}
 		});
 
-		stage.setOnCloseRequest(e -> {
-        	
-	       	 Alert closeConfirmation = new Alert(
-	                    Alert.AlertType.CONFIRMATION,
-	                    "Do you want to save file?"
-	            );
-	            Button saveButton = (Button) closeConfirmation.getDialogPane().lookupButton(
-	                    ButtonType.OK
-	            );
-	            saveButton.setText("Save");
-	            saveButton.setOnAction(new EventHandler<ActionEvent>() {
-	    			@Override
-	    			public void handle(ActionEvent event) {
-	    				FileWriter fileWriter;
-	    				try {
-	    					fileWriter = new FileWriter("test.cpp");
-	    					fileWriter.write(editor.getText());
-	    					fileWriter.close();
-	    					Alert alert = new Alert(AlertType.INFORMATION);
-	    					alert.setTitle("Information Dialog");
-	    					alert.setHeaderText(null);
-	    					alert.setContentText("File Saved Successfully!");
-	    					alert.showAndWait();
-	    				} catch (IOException e) {
-	    					// TODO Auto-generated catch block
-	    					e.printStackTrace();
-	    				}
-	    			
-	    			}
-	    		});
-	            closeConfirmation.initModality(Modality.APPLICATION_MODAL);
-	            closeConfirmation.initOwner(stage);
-	            
-	            Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
-	            if (!ButtonType.OK.equals(closeResponse.get())) {
-	                e.consume();
-	            }
 
-	       });
+
+
+		stage.setOnCloseRequest(e2 -> {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setHeaderText("Do you want to save file before closing?");
+				ButtonType yes = new ButtonType("Yes");
+				ButtonType no = new ButtonType("No");
+
+				// Remove default ButtonTypes
+				alert.getButtonTypes().clear();
+				alert.getButtonTypes().addAll(yes, no);
+				Optional<ButtonType> option = alert.showAndWait();
+
+				if (option.get() == yes) {
+					//call saving
+					FileWriter fileWriter;
+					try {
+						fileWriter = new FileWriter("test.cpp");
+						fileWriter.write(editor.getText());
+						fileWriter.close();
+
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else if (option.get() == no) {
+					Platform.exit();
+				}
+		});
+
+
 
 
 		open.setOnAction(new EventHandler<ActionEvent>() {
@@ -767,7 +766,8 @@ public class CodeEditorController extends Application {
                             output.setText("Debug Result:" + resultO);
                         }
                         else{
-                            output.setText("command executed, any errors? No");
+							execute.setDisable(false);
+							output.setText("command executed, any errors? No");
                         }
                         reader.close();
                     } catch (IOException e) {
@@ -896,6 +896,7 @@ public class CodeEditorController extends Application {
 							output.setText( "Optimized Result:" + resultO);
 						}
 						else{
+							execute.setDisable(false);
 							output.setText("command executed, any errors? No");
 						}
 						reader.close();
@@ -975,6 +976,7 @@ public class CodeEditorController extends Application {
 							output.setText( "Optimized Result:" + resultO);
 						}
 						else{
+							execute.setDisable(false);
 							output.setText("command executed, any errors? No");
 						}
 						reader.close();
@@ -1047,6 +1049,7 @@ public class CodeEditorController extends Application {
 							output.setText( "Optimized Result:" + resultO);
 						}
 						else{
+							execute.setDisable(false);
 							output.setText("command executed, any errors? No");
 						}
 						reader.close();
@@ -1116,6 +1119,7 @@ public class CodeEditorController extends Application {
 							output.setText( "Optimized Result:" + resultO);
 						}
 						else{
+							execute.setDisable(false);
 							output.setText("command executed, any errors? No");
 						}
 						reader.close();
