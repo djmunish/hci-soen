@@ -36,7 +36,7 @@ public class Main extends Application {
         try {
             URL iconURL = Main.class.getResource("images/c.png");
             java.awt.Image image = new ImageIcon(iconURL).getImage();
-            //com.apple.eawt.Application.getApplication().setDockIconImage(image);
+            com.apple.eawt.Application.getApplication().setDockIconImage(image);
         } catch (Exception e) {
             // Won't work on Windows or Linux.
         }

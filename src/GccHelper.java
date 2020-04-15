@@ -22,7 +22,6 @@ public class GccHelper { // Linker File
 				}
 				System.out.println("result="+line);
 			}
-			System.out.println("dsad="+result);
 
 			if(command.equals("g++ test.cpp -o test")) {
 				int exitVal = pr.waitFor();
@@ -39,10 +38,9 @@ public class GccHelper { // Linker File
 
 		} catch(Exception e) {
 			return("exception"+e.toString());
-		}
-
-		
+		}	
 	}
+
 
 
 	public static void runCompile(String command){

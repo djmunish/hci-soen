@@ -52,7 +52,7 @@ public class CodeEditorController extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		// create the editing controls.
-		stage.getIcons().add(new Image("/Images/c.png"));
+		stage.getIcons().add(new Image("images/c.png"));
 		stage.setTitle(Constants.TITLE_COMPILER);
 
 
@@ -71,7 +71,7 @@ public class CodeEditorController extends Application {
 		MenuItem undo = new MenuItem("Undo Typing");
 		MenuItem redo = new MenuItem("Redo Typing");
 		edit.getItems().addAll(undo,redo);
-		
+
 
 		// --- Menu Save
 		Menu save = new Menu("Save");
@@ -98,9 +98,9 @@ public class CodeEditorController extends Application {
 		output.setPrefHeight(200); 
 		output.setPrefWidth(300);
 		output.setStyle("-fx-control-inner-background: #F2FAFA");
-		final Button revertEdits = new Button("Erase All");
+		//final Button revertEdits = new Button("Erase All");
 		final Button outputErase = new Button("");
-		Image trash = new Image(getClass().getResourceAsStream("images/trash.png"),20,20,true,true);
+		Image trash = new Image(getClass().getResourceAsStream("images/trash.png"),15,15,true,true);
 		outputErase.setGraphic(new ImageView(trash));
 
 
@@ -264,13 +264,13 @@ public class CodeEditorController extends Application {
 			toolBar.getItems().add(allOptionLabel);
 		}
 
-		revertEdits.setOnAction(new EventHandler<ActionEvent>() {
+		/*revertEdits.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override 
 			public void handle(ActionEvent actionEvent) {
 				editor.setText("");
 			}
-		});
+		});*/
 		outputErase.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override 
@@ -288,8 +288,8 @@ public class CodeEditorController extends Application {
 		layout.getChildren().addAll(menuBar);
 
 		outHbox.getChildren().addAll(outputTitle, outputErase);
-		outputErase.setTranslateX(1160);
-		list.addAll(title, toolBar, editor,revertEdits,outHbox,output);
+		outputErase.setTranslateX(1300);
+		list.addAll(title, toolBar, editor,outHbox,output);
 		layout.setStyle("-fx-background-color: #9393A7; -fx-padding: 10;");
 
 
@@ -515,24 +515,24 @@ public class CodeEditorController extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-//				Runtime rt = Runtime.getRuntime();
-//				try {
-//					//-O1 -O2 -O3 -Ofast
-//					Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
-//					String optResult = GccHelper.runCommand("./optimizeCode");
-//					output.setText("Optimized Result:"+optResult);
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				//				Runtime rt = Runtime.getRuntime();
+				//				try {
+				//					//-O1 -O2 -O3 -Ofast
+				//					Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
+				//					String optResult = GccHelper.runCommand("./optimizeCode");
+				//					output.setText("Optimized Result:"+optResult);
+				//				} catch (IOException e) {
+				//					// TODO Auto-generated catch block
+				//					e.printStackTrace();
+				//				}
 
 				String debugResult1 = GccHelper.runCommand("g++ -D DEBUG test.cpp -o debug");
 				System.out.println(debugResult1);
 
 
-//
-//				String debugResult = GccHelper.runCommand("./debug");
-//				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
+				//
+				//				String debugResult = GccHelper.runCommand("./debug");
+				//				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
 
 				try {
 					Thread.sleep(2000);
@@ -593,13 +593,13 @@ public class CodeEditorController extends Application {
 			}
 
 		});
-		
+
 		undo.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				editor.undo();}
 		});
-		
+
 		redo.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -611,29 +611,8 @@ public class CodeEditorController extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				FileWriter fileWriter;
-				try {
-					fileWriter = new FileWriter("test.cpp");
-					fileWriter.write(editor.getText());
-					fileWriter.close();
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Information Dialog");
-					alert.setHeaderText(null);
-					alert.setContentText("File Saved Successfully!");
-					alert.showAndWait();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-		});
-
-
-
-
-		stage.setOnCloseRequest(e2 -> {
 				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setHeaderText("Do you want to save file before closing?");
+				alert.setHeaderText("Do you want to the save file ?");
 				ButtonType yes = new ButtonType("Yes");
 				ButtonType no = new ButtonType("No");
 
@@ -643,20 +622,55 @@ public class CodeEditorController extends Application {
 				Optional<ButtonType> option = alert.showAndWait();
 
 				if (option.get() == yes) {
-					//call saving
-					FileWriter fileWriter;
 					try {
 						fileWriter = new FileWriter("test.cpp");
 						fileWriter.write(editor.getText());
 						fileWriter.close();
-
+						Alert alert1 = new Alert(AlertType.INFORMATION);
+						alert1.setTitle("Information Dialog");
+						alert1.setHeaderText(null);
+						alert1.setContentText("File Saved Successfully!");
+						alert1.showAndWait();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				} else if (option.get() == no) {
-					Platform.exit();
+
+
 				}
+				else if (option.get() == no) {
+					
+				}
+				}
+		});
+
+
+		stage.setOnCloseRequest(e2 -> {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setHeaderText("Do you want to save file before closing?");
+			ButtonType yes = new ButtonType("Yes");
+			ButtonType no = new ButtonType("No");
+
+			// Remove default ButtonTypes
+			alert.getButtonTypes().clear();
+			alert.getButtonTypes().addAll(yes, no);
+			Optional<ButtonType> option = alert.showAndWait();
+
+			if (option.get() == yes) {
+				//call saving
+				FileWriter fileWriter;
+				try {
+					fileWriter = new FileWriter("test.cpp");
+					fileWriter.write(editor.getText());
+					fileWriter.close();
+
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else if (option.get() == no) {
+				Platform.exit();
+			}
 		});
 
 
@@ -708,71 +722,71 @@ public class CodeEditorController extends Application {
 				// TODO Auto-generated method stub	
 				//					Runtime rt = Runtime.getRuntime();
 				//					Process pr = rt.exec("g++ -D DEBUG test.cpp -o debug");
-//
+				//
 				String debugResult1 = GccHelper.runCommand("g++ -D DEBUG test.cpp -o debug");
 				System.out.println(debugResult1);
 
 
-//
-//				String debugResult = GccHelper.runCommand("./debug");
-//				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
+				//
+				//				String debugResult = GccHelper.runCommand("./debug");
+				//				output.setText("Debug Result:"+debugResult1+"\n"+debugResult);
 
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 
-                try {
-                        Process process = Runtime.getRuntime().exec("./debug");
+				try {
+					Process process = Runtime.getRuntime().exec("./debug");
 
-                        output.setText("");
-
-
-                        BufferedWriter writer = new BufferedWriter(
-                                new OutputStreamWriter(process.getOutputStream()));
+					output.setText("");
 
 
-                        TextInputDialog dialog = new TextInputDialog("");
+					BufferedWriter writer = new BufferedWriter(
+							new OutputStreamWriter(process.getOutputStream()));
 
-                        dialog.setHeaderText("Enter the input if any (leave blank if no input)");
-                        dialog.setContentText("Input:");
 
-                        dialog.setWidth(650);
-                        Optional<String> result = dialog.showAndWait();
+					TextInputDialog dialog = new TextInputDialog("");
 
-                        result.ifPresent(input -> {
-                            System.out.println(input);
-                            try {
-                                writer.write(input);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        });
+					dialog.setHeaderText("Enter the input if any (leave blank if no input)");
+					dialog.setContentText("Input:");
 
-                        writer.close();
-                        String resultO = "";
+					dialog.setWidth(650);
+					Optional<String> result = dialog.showAndWait();
 
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                                process.getInputStream()));
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            System.out.println(line);
-                            resultO += line +"\n";
+					result.ifPresent(input -> {
+						System.out.println(input);
+						try {
+							writer.write(input);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					});
 
-                        }
-                        System.out.println(resultO);
-                        if(!GccHelper.isNullOrEmpty(resultO)){
-                            output.setText("Debug Result:" + resultO);
-                        }
-                        else{
-							execute.setDisable(false);
-							output.setText("command executed, any errors? No");
-                        }
-                        reader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+					writer.close();
+					String resultO = "";
+
+					BufferedReader reader = new BufferedReader(new InputStreamReader(
+							process.getInputStream()));
+					String line;
+					while ((line = reader.readLine()) != null) {
+						System.out.println(line);
+						resultO += line +"\n";
+
+					}
+					System.out.println(resultO);
+					if(!GccHelper.isNullOrEmpty(resultO)){
+						output.setText("Debug Result:" + resultO);
+					}
+					else{
+						execute.setDisable(false);
+						output.setText("command executed, any errors? No");
+					}
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 
 
 
@@ -830,16 +844,16 @@ public class CodeEditorController extends Application {
 			@Override
 			public void changed(ObservableValue ov, Number value, Number new_value) {
 				// TODO Auto-generated method stub
-//				Runtime rt = Runtime.getRuntime();
+				//				Runtime rt = Runtime.getRuntime();
 				if(opt1[new_value.intValue()].equals("Ofast")){
-//					try {
-//						Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
-//						String optResult = GccHelper.runCommand("./optimizeCode");
-//						output.setText("Optimized Result:"+optResult);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+					//					try {
+					//						Process pr = rt.exec("g++ -Ofast test.cpp -o optimizeCode");
+					//						String optResult = GccHelper.runCommand("./optimizeCode");
+					//						output.setText("Optimized Result:"+optResult);
+					//					} catch (IOException e) {
+					//						// TODO Auto-generated catch block
+					//						e.printStackTrace();
+					//					}
 
 
 
@@ -915,14 +929,14 @@ public class CodeEditorController extends Application {
 				}
 				else if(opt1[new_value.intValue()].equals("O1")){
 
-//					try {
-//						Process pr = rt.exec("g++ -O1 test.cpp -o optimizeCode");
-//						String optResult = GccHelper.runCommand("./optimizeCode");
-//						output.setText("Optimized Result:"+optResult);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+					//					try {
+					//						Process pr = rt.exec("g++ -O1 test.cpp -o optimizeCode");
+					//						String optResult = GccHelper.runCommand("./optimizeCode");
+					//						output.setText("Optimized Result:"+optResult);
+					//					} catch (IOException e) {
+					//						// TODO Auto-generated catch block
+					//						e.printStackTrace();
+					//					}
 
 
 					String debugResult1 = GccHelper.runCommand("g++ -O1 test.cpp -o optimizeCode");
@@ -986,14 +1000,14 @@ public class CodeEditorController extends Application {
 
 				}
 				else if(opt1[new_value.intValue()].equals("O2")){
-//					try {
-//						Process pr = rt.exec("g++ -O2 test.cpp -o optimizeCode");
-//						String optResult = GccHelper.runCommand("./optimizeCode");
-//						output.setText("Optimized Result:"+optResult);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+					//					try {
+					//						Process pr = rt.exec("g++ -O2 test.cpp -o optimizeCode");
+					//						String optResult = GccHelper.runCommand("./optimizeCode");
+					//						output.setText("Optimized Result:"+optResult);
+					//					} catch (IOException e) {
+					//						// TODO Auto-generated catch block
+					//						e.printStackTrace();
+					//					}
 
 
 
@@ -1058,14 +1072,14 @@ public class CodeEditorController extends Application {
 					}
 				}
 				else if(opt1[new_value.intValue()].equals("O3")){
-//					try {
-//						Process pr = rt.exec("g++ -O3 test.cpp -o optimizeCode");
-//						String optResult = GccHelper.runCommand("./optimizeCode");
-//						output.setText("Optimized Result:"+optResult);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+					//					try {
+					//						Process pr = rt.exec("g++ -O3 test.cpp -o optimizeCode");
+					//						String optResult = GccHelper.runCommand("./optimizeCode");
+					//						output.setText("Optimized Result:"+optResult);
+					//					} catch (IOException e) {
+					//						// TODO Auto-generated catch block
+					//						e.printStackTrace();
+					//					}
 
 
 					String debugResult1 = GccHelper.runCommand("g++ -O3 test.cpp -o optimizeCode");
